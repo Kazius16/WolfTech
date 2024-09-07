@@ -1,0 +1,96 @@
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  
+    background-color: white;
+    width: 1900px; 
+    height: 300px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-items: center; 
+    overflow-y: auto;
+  }
+  
+  .seccion {
+    width: 10%;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 5px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(14, 14, 14, 0.5);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px;
+    transition: transform 0.5s ease-in-out;
+  
+  }
+  
+  .seccion:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(168, 195, 199, 0.5);
+  }
+  
+  #mouse {
+    background-image: url('https://c0.wallpaperflare.com/preview/316/361/238/black-logitech-g-series-gaming-mouse-on-red-surface.jpg');
+    width: 235px;
+    height: 200px;
+    margin: 30px;
+}
+
+#mouse:hover {
+  background-size: 150%; /* aumenta el tamaño de la imagen de fondo cuando se coloca el cursor */
+  color: rgba(153, 102, 102, 0.336); /* reduce la opacidad del texto "mas" cuando se coloca el cursor */
+}
+    
+  
+
+  #teclados {
+    background-image: url('https://wallpapers.com/images/hd/dark-keyboard-rgb-4k-rt6r0gc019dfct8f.jpg');
+    width: 235px;
+    height: 200px;
+    margin: 30px;
+  }
+  #teclados:hover {
+    background-size: 150%; /* aumenta el tamaño de la imagen de fondo cuando se coloca el cursor */
+    color: rgba(153, 102, 102, 0.336); /* reduce la opacidad del texto "mas" cuando se coloca el cursor */
+  }
+  #pantallas {
+    background-image: url('https://xanxogaming.com/wp-content/uploads/2023/01/Monitor-Guia-Banner.jpg');
+    width: 235px;
+    margin: 30px;
+    height: 200px;
+  }
+  #pantallas:hover {
+    background-size: 150%; /* aumenta el tamaño de la imagen de fondo cuando se coloca el cursor */
+    color: rgba(153, 102, 102, 0.336); /* reduce la opacidad del texto "mas" cuando se coloca el cursor */
+  }
+  
+  #portatiles {
+    background-image: url('https://acf.geeknetic.es/imgri/imagenes/noticias/2020/18734-msi-gaming-muestra.jpg?f=webp');
+    width: 235px;
+    margin: 30px;  
+    height: 200px;
+  }
+  #portatiles:hover {
+    background-size: 150%; /* aumenta el tamaño de la imagen de fondo cuando se coloca el cursor */
+    color: rgba(153, 102, 102, 0.336); /* reduce la opacidad del texto "mas" cuando se coloca el cursor */
+  }
+  
+  #componentes {
+    background-image: url('https://img.freepik.com/fotos-premium/componentes-electronicos-fondo-pantalla-hd-8k-imagen-fotografica-stock_890746-75268.jpg');
+    width: 235px;
+    height: 200px;
+  }
+  #componentes:hover {
+    background-size: 150%; /* aumenta el tamaño de la imagen de fondo cuando se coloca el cursor */
+    color: rgba(153, 102, 102, 0.336); /* reduce la opacidad del texto "mas" cuando se coloca el cursor */
+  }
