@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 .container {
   display: flex;
   justify-content: flex-end;
@@ -54,4 +52,3 @@ button {
 button:hover {
   background-color: #0056b3;
 }
->>>>>>> 905600bad25df217282b4993bf50d28b879e509e
