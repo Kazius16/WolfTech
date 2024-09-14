@@ -243,45 +243,144 @@
             </div>
         </section>
         <!-- Contact-->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Direccion</h4>
-                                <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">WolfTech Virtual</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-envelope text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Correo</h4>
-                                <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50"><a href="#!">empwolftech@gmail.com</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Telefonos</h4>
-                                <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">3247651584-3016505474</div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="social d-flex justify-content-center">
-                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
-                </div>
+                <ul class="wrapper">
+                    <li class="icon facebook">
+                      <a href="https://www.facebook.com" target="_blank">
+                        <span><i class="fab fa-facebook-f"></i></span>
+                      </a>
+                    </li>
+                    <li class="icon youtube">
+                      <a href="https://www.youtube.com/@Wolf_Tech." target="_blank">
+                        <span><i class="fab fa-youtube"></i></span>
+                      </a>
+                    </li>
+                    <li class="icon tiktok">
+                      <a href="https://www.tiktok.com/@wolf_tech1" target="_blank">
+                        <span><i class="fab fa-tiktok"></i></span>
+                      </a>
+                    </li>
+                    <li class="icon instagram">
+                      <a href="https://www.instagram.com/wolf_tech1/" target="_blank">
+                        <span><i class="fab fa-instagram"></i></span>
+                      </a>
+                    </li>
+                  </ul>
+                    </div> 
+                    <style>
+                        
+                        @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+                        * {
+          margin: 0;
+          padding: 0;
+          
+        }
+        *:focus,
+        *:active {
+          outline: none !important;
+          -webkit-tap-highlight-color: transparent;
+        }
+        html,
+        body {
+          display: table;
+          height: 100%;
+          width: 100%;
+          font-family: "SUSE", sans-serif;
+          place-items: center;
+          text-align: center;
+          background: linear-gradient(315deg, #ffffff, #d7e1ec);
+        }
+        .wrapper {
+          display: inline-flex;
+          list-style: none;
+        }
+        .wrapper .icon {
+  position: relative;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon a {
+  display: flex; /* Add this line */
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+        .wrapper .tooltip {
+          position: absolute;
+          top: 0;
+          font-size: 14px;
+          background: #ffffff;
+          color: #ffffff;
+          padding: 5px 8px;
+          border-radius: 5px;
+          box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .wrapper .tooltip::before {
+          position: absolute;
+          content: "";
+          height: 8px;
+          width: 8px;
+          background: #ffffff;
+          bottom: -3px;
+          left: 50%;
+          transform: translate(-50%) rotate(45deg);
+          transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .wrapper .icon:hover .tooltip {
+          top: -45px;
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+        .wrapper .icon:hover span,
+        .wrapper .icon:hover .tooltip {
+          text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+        }
+        .wrapper .facebook:hover,
+        .wrapper .facebook:hover .tooltip,
+        .wrapper .facebook:hover .tooltip::before {
+          background: #1877F2;
+          color: #ffffff;
+        }
+        .wrapper .tiktok:hover,
+        .wrapper .tiktok:hover .tooltip,
+        .wrapper .tiktok:hover .tooltip::before {
+          background: #000000;
+          color: #ffffff;
+        }
+        .wrapper .instagram:hover,
+        .wrapper .instagram:hover .tooltip,
+        .wrapper .instagram:hover .tooltip::before {
+          background: #e911be;
+          color: #ffffff;
+        }
+        .wrapper .youtube:hover,
+        .wrapper .youtube:hover .tooltip,
+        .wrapper .youtube:hover .tooltip::before {
+          background: #CD201F;
+          color: #ffffff;
+        }
+                    </style>
             </div>
         </section>
         <!-- Footer-->
