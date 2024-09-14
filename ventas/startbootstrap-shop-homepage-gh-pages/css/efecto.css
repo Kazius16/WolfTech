@@ -1,0 +1,45 @@
+.collage-effect {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Point_Reyes_Lighthouse_%28April_2012%29.jpg/593px-Point_Reyes_Lighthouse_%28April_2012%29.jpg);
+  background-size: cover;
+  background-position: center;
+
+  @supports (background-blend-mode: overlay) {
+    background-image: 
+      url( https://w0.peakpx.com/wallpaper/648/405/HD-wallpaper-gaming-pc-setup-thumbnail.jpg),
+        url(https://w0.peakpx.com/wallpaper/648/405/HD-wallpaper-gaming-pc-setup-thumbnail.jpg),
+      url(https://w0.peakpx.com/wallpaper/648/405/HD-wallpaper-gaming-pc-setup-thumbnail.jpg),
+      url(https://w0.peakpx.com/wallpaper/648/405/HD-wallpaper-gaming-pc-setup-thumbnail.jpg),
+      url(https://w0.peakpx.com/wallpaper/648/405/HD-wallpaper-gaming-pc-setup-thumbnail.jpgD);
+    animation-duration: 3s;
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-direction: forward;
+    animation-name: animate;
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+  }
+}
+
+/* CodePen Styles */
+body {
+height:200px;
+}
+div {
+	margin: auto;
+}
+
+@keyframes animate {
+  0% {
+    background-size: 200%, 80%, 60%, 50%, 40%, 100%;
+		background-position: 50%, 80%, 30%, 0;
+  }
+
+  50% {
+    background-size: 180%, 70%, 50%, 40%, 30%, 90%;
+		background-position: 40%, 70%, 20%, 0;
+  }
+  100% {
+    background-size: 200%, 80%, 60%, 50%, 40%, 100%;
+		background-position: 50%, 80%, 30%, 0;
+  }
+}
