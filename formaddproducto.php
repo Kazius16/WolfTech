@@ -7,8 +7,6 @@
     <title>WolfTech - Todos los productos</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="css/ventas.css">
-
-
 </head>
 
 <body>
@@ -22,10 +20,10 @@
                 <li><a href="#products">Productos</a></li>
                 <li><a href="#about">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
+                <li><a href="#add-product">Agregar Producto</a></li>
             </ul>
         </nav>
         <div class="cart-icon" id="cartIcon">🛒</div>
-        
     </header>
 
     <section class="hero" id="home">
@@ -41,32 +39,31 @@
         <button class="filter-button" data-filter="computadoras">Computadoras</button>
         <button class="filter-button" data-filter="audio">Audio</button>
         <button class="filter-button" data-filter="accesorios">Accesorios</button>
-        <button class="filter-button" data-filter="monitores">monitores</button>
+        <button class="filter-button" data-filter="monitores">Monitores</button>
     </section>
 
-    <section class="products" id="products">
 
-        <?php
+    <!-- Sección para agregar un nuevo producto -->
+    <section class="add-product" id="add-product">
+        <h2>Agregar Nuevo Producto</h2>
+        <form action="submit_product.php" method="post" enctype="multipart/form-data">
+            <label for="nombre_producto">Nombre del Producto:</label>
+            <input type="text" id="nombre_producto" name="nombre_producto" required>
 
-        include("conn/conexion.php");
-        $query = "SELECT productos.Nombre_producto, productos.imagen, productos.Precio, marcas.marca, categorias.nom_categorias FROM productos INNER JOIN marcas ON marcas.id_marca=productos.id_marca INNER JOIN categorias ON productos.id_categoria_p=categorias.id_categoria;";
-        $resultado = $conexion->query($query);
-        while ($row = $resultado->fetch_assoc()) {
-            ?>
-            <div class="product" style="width: 16rem;" data-category="<?php echo $row["nom_categorias"]; ?>">
+            <label for="imagen">Imagen del Producto:</label>
+            <input type="file" id="imagen" name="imagen" accept="image/*" required>
 
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagen']); ?>" />
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" step="0.01" required>
 
-                <h3><?php echo $row["Nombre_producto"]; ?></h3>
-                <p>$ <?php echo number_format($row["Precio"], 0, '.', ','); ?>
-                </p>
-                <button class="add-to-cart">Agregar al Carrito</button>
-            </div>
-            <?php
-        }
-        ?>
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" required>
 
+            <label for="categoria">Categoría:</label>
+            <input type="text" id="categoria" name="categoria" required>
 
+            <button type="submit">Agregar Producto</button>
+        </form>
     </section>
 
     <footer>
@@ -175,9 +172,6 @@
                     }
                 });
             }
-
-            // Nueva animación para la imagen del hero
-
         });
     </script>
 
