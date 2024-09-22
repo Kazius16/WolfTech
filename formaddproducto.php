@@ -64,7 +64,7 @@
 
             <button type="submit">Agregar Producto</button>
         </form>
-    </section>
+       </section>
 
     <footer>
         <p>&copy; 2023 TechStore. Todos los derechos reservados.</p>

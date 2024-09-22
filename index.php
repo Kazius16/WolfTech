@@ -7,8 +7,9 @@
     <title>WolfTech - Todos los productos</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="css/ventas.css">
+    <link href="css/tipos.css" rel="stylesheet" />
 
-
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,8 +21,13 @@
             <ul>
                 <li><a href="http://localhost/WolfTech/ventas/startbootstrap-shop-homepage-gh-pages/">Inicio</a></li>
                 <li><a href="#products">Productos</a></li>
-                <li><a href="#about">Nosotros</a></li>
+                <li><a href="introduccion\index.php">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
+                <li class="nav-item">
+                            <a class="nav-link" href="login.php">
+                              <img src="assets/img/usua.png" alt="" class="logo-image">
+                            </a>
+                          </li>
             </ul>
         </nav>
         <div class="cart-icon" id="cartIcon">🛒</div>
@@ -37,12 +43,30 @@
     </section>
 
     <section class="filters">
-        <button class="filter-button active" data-filter="all">Todos</button>
-        <button class="filter-button" data-filter="computadoras">Computadoras</button>
-        <button class="filter-button" data-filter="audio">Audio</button>
-        <button class="filter-button" data-filter="accesorios">Accesorios</button>
-        <button class="filter-button" data-filter="monitores">monitores</button>
+  
     </section>
+         
+            <div class="menu">
+                <div class="seccion" id="mouse">
+                    <h2>Mouse</h2>
+                </div>
+                <div class="seccion" id="teclados">
+                    <h2>Teclados</h2>
+                </div>
+                <div class="seccion" id="pantallas">
+                    <h2>Pantallas</h2>
+                </div>
+                <div class="seccion" id="portatiles" class="filter-button" data-filter="computadoras">
+                    <h2>Portátiles</h2>
+                </div>
+                <div class="seccion" id="componentes">
+                    <h2>Componentes</h2>
+                </div>
+            </div>
+        
+            <script src="script.js"></script>
+        </>
+
 
     <section class="products" id="products">
 
