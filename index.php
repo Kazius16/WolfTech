@@ -24,7 +24,7 @@
                 <li><a href="introduccion\index.php">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
                 <br><br>
-                <li><a href="Inicio de sesion.php"> <img src="assets/img/usuario.png" alt="" class="logo-image" style="width: 35px; height: 35px;"></a> </li>
+                <li><a href="login.php"> <img src="assets/img/usuario.png" alt="" class="logo-image" style="width: 35px; height: 35px;"></a> </li>
 
             </ul>
         </nav>
