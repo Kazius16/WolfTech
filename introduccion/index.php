@@ -32,9 +32,7 @@
                         <li class="nav-item"><a class="nav-link" href="#projects">Proyecto</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Inicio de sesion.html">
-                              <img src="assets/img/usuario.png" alt="" class="logo-image">
-                            </a>
+                            
                           </li>
                     </ul>
                 </div>

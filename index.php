@@ -15,7 +15,7 @@
 <body>
     <header>
         <div class="logo">
-            <a>WolfTech111</a>
+            <a>WolfTech</a>
         </div>
         <nav>
             <ul>
@@ -23,15 +23,13 @@
                 <li><a href="#products">Productos</a></li>
                 <li><a href="introduccion\index.php">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
-                <li class="nav-item">
-                            <a class="nav-link" href="login.php">
-                              <img src="assets/img/usua.png" alt="" class="logo-image">
-                            </a>
-                          </li>
+                <br><br>
+                <li><a href="Inicio de sesion.php"> <img src="assets/img/usuario.png" alt="" class="logo-image" style="width: 35px; height: 35px;"></a> </li>
+
             </ul>
         </nav>
         <div class="cart-icon" id="cartIcon">🛒</div>
-        
+
     </header>
 
     <section class="hero" id="home">
@@ -43,29 +41,29 @@
     </section>
 
     <section class="filters">
-  
+    <div class="menu">
+        <div class="seccion" id="mouse">
+            <h2>Mouse</h2>
+        </div>
+        <div class="seccion" id="teclados">
+            <h2>Teclados</h2>
+        </div>
+        <div class="seccion" id="pantallas">
+            <h2>Pantallas</h2>
+        </div>
+        <div class="seccion" id="portatiles" class="filter-button" data-filter="computadoras">
+            <h2>Portátiles</h2>
+        </div>
+        <div class="seccion" id="componentes">
+            <h2>Componentes</h2>
+        </div>
+    </div>
+
     </section>
-         
-            <div class="menu">
-                <div class="seccion" id="mouse">
-                    <h2>Mouse</h2>
-                </div>
-                <div class="seccion" id="teclados">
-                    <h2>Teclados</h2>
-                </div>
-                <div class="seccion" id="pantallas">
-                    <h2>Pantallas</h2>
-                </div>
-                <div class="seccion" id="portatiles" class="filter-button" data-filter="computadoras">
-                    <h2>Portátiles</h2>
-                </div>
-                <div class="seccion" id="componentes">
-                    <h2>Componentes</h2>
-                </div>
-            </div>
-        
-            <script src="script.js"></script>
-        </>
+
+    
+    <script src="script.js"></script>
+    </>
 
 
     <section class="products" id="products">
@@ -76,7 +74,7 @@
         $query = "SELECT productos.Nombre_producto, productos.imagen, productos.Precio, marcas.marca, categorias.nom_categorias FROM productos INNER JOIN marcas ON marcas.id_marca=productos.id_marca INNER JOIN categorias ON productos.id_categoria_p=categorias.id_categoria;";
         $resultado = $conexion->query($query);
         while ($row = $resultado->fetch_assoc()) {
-            ?>
+        ?>
             <div class="product" style="width: 16rem;" data-category="<?php echo $row["nom_categorias"]; ?>">
 
                 <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagen']); ?>" />
@@ -86,7 +84,7 @@
                 </p>
                 <button class="add-to-cart">Agregar al Carrito</button>
             </div>
-            <?php
+        <?php
         }
         ?>
 
@@ -106,7 +104,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const cartIcon = document.getElementById('cartIcon');
             const cartModal = document.getElementById('cartModal');
             const closeModal = document.getElementById('closeModal');
@@ -146,7 +144,10 @@
                 const productName = product.querySelector('h3').textContent;
                 const productPrice = parseFloat(product.querySelector('p').textContent.replace('$', ''));
 
-                cart.push({ name: productName, price: productPrice });
+                cart.push({
+                    name: productName,
+                    price: productPrice
+                });
                 updateCartDisplay();
 
                 // Animación de agregar al carrito

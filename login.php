@@ -26,12 +26,12 @@
 
   <body>
     <iframe
-      src="fondoparticulas.html"
+      src="fondoparticulas.php"
       frameborder="0"
       width="100%"
       height="100%"
     ></iframe>
-    
+
 
     <div class="container">
       <div class="signin-signup">
@@ -49,9 +49,9 @@
           <br /><br />
           <input type="submit" value="Login" class="btn" />
           <br /><br />
-          <button class="btn"><a href="index.html">Volver al inicio</a></button>
+          <button class="btn"><a href="index.php">Volver al inicio</a></button>
           <p class="account-text">
-            Don't have an account? <a href="index.html" id="sign-up-btn2">Sign up</a>
+            Don't have an account? <a href="index.php" id="sign-up-btn2">Sign up</a>
           </p>
         </form>
         <form action="" class="sign-up-form">
@@ -71,7 +71,7 @@
           <input type="submit" value="Sign up" class="btn" /><button
             class="btn"
           >
-            <a href="index.html">Volver al inicio</a>
+            <a href="index.php">Volver al inicio</a>
           </button>
 
           <p class="account-text">
@@ -102,6 +102,6 @@
         </div>
       </div>
     </div>
-    <script src="js/scriptlogin.js "></script>
+    <script src="scriptlogin.js"></script>
   </body>
 </html>

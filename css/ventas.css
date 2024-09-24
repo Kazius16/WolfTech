@@ -111,10 +111,6 @@ nav ul li a:hover {
 .filters {
     padding: 2rem;
     background-color: #1a1a1a;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
 }
 
 .filter-button {
