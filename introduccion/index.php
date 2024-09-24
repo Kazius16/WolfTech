@@ -131,7 +131,7 @@
 <script>
     document.getElementById('btnCompra').addEventListener('click', function() {
         // Cambia 'https://tu-pagina-de-ventas.com' por la URL real de tu página de ventas
-        window.location.href = 'http://localhost/WolfTech/ventas/startbootstrap-shop-homepage-gh-pages/';
+        window.location.href = 'http://localhost/WolfTech/';
 
     });
 </script>
