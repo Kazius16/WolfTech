@@ -18,7 +18,8 @@ Tienda en **Next.js** con el catálogo en **Supabase**. Se publica en **Vercel**
 | `lib/datos.js` | Lee el catálogo de Supabase (con copia de respaldo). |
 | `lib/admin.js` | Lógica del panel del administrador. |
 | `lib/lectores.js` | Lectores de los PDF de J&L y PYPHS. |
-| `data/catalogo.txt` | Copia de respaldo del catálogo (formato `categoria;marca;nombre;costo;estado;proveedor;ref`). |
+| `lib/catalogo-respaldo.js` | Copia del catálogo público (sin costos), por si Supabase no responde. |
+| `supabase/` | SQL de la base de datos. `02-ocultar-costos.sql` esconde costos y márgenes a los clientes. |
 
 ## Cambios comunes
 
