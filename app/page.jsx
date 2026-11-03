@@ -1,5 +1,5 @@
 /* Página de inicio: hero, catálogo, armador y cómo compras */
-import { SITIO, TIENDA, telefonoIntl } from '@/lib/config';
+import { REDES, SITIO, TIENDA, telefonoIntl } from '@/lib/config';
 import { obtenerCatalogo } from '@/lib/datos';
 import Hero from '@/components/Hero';
 import Catalogo from '@/components/Catalogo';
@@ -26,6 +26,7 @@ export default async function Inicio() {
             address: { '@type': 'PostalAddress', addressLocality: 'Envigado', addressRegion: 'Antioquia', addressCountry: 'CO' },
             areaServed: [...['Medellín', 'Envigado', 'Itagüí', 'Sabaneta', 'Bello', 'La Estrella'].map((c) => ({ '@type': 'City', name: c })), { '@type': 'Country', name: 'Colombia' }],
             priceRange: '$$',
+            sameAs: Object.values(REDES).filter(Boolean),
           },
           { '@type': 'WebSite', '@id': SITIO + '/#web', url: SITIO + '/', name: 'WolfTech', inLanguage: 'es-CO', publisher: { '@id': SITIO + '/#tienda' } },
         ],

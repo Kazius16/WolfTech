@@ -283,7 +283,7 @@ export default function Hero() {
       <div className="hero__fallback" aria-hidden="true"><Logo /></div>
       <p className="hero__meta mono">{meta}</p>
       <div className="hero__copy">
-        <h1 aria-label="Arma la bestia."><Letras lineas={['Arma la', 'bestia.']} d0={1.15} /></h1>
+        <h1 aria-label="Construye poder."><Letras lineas={['Construye', 'poder.']} d0={1.15} /></h1>
         <div className="hero__side">
           <p className="wipe" style={{ '--d': '2.1s' }}>Procesadores, tarjetas de video, boards y portátiles gamer. Cotiza por WhatsApp y te confirmamos disponibilidad el mismo día. Envíos a toda Colombia.</p>
           <div className="row wipe" style={{ '--d': '2.3s' }}>
