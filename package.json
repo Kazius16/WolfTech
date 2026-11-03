@@ -1,0 +1,20 @@
+{
+  "name": "wolftech",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Tienda WolfTech: componentes y PC gamer (Next.js + Supabase)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "next": "^16.0.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
