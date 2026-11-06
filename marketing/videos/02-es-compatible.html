@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;background:#000;overflow:hidden}
+  body{font-family:'Inter Display','Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  .capa{position:absolute;inset:0;display:none;overflow:hidden}
+  .mono{font-family:'DejaVu Sans Mono',monospace;letter-spacing:.1em}
+  .l{position:absolute;left:0;right:0;text-align:center;font-weight:900;letter-spacing:-.02em;line-height:1;white-space:nowrap;text-transform:uppercase}
+  /* cadena */
+  #titulo{position:absolute;left:100px;top:230px;font-weight:900;font-size:96px;letter-spacing:-.03em;text-transform:uppercase}
+  #sub{position:absolute;left:104px;top:340px;font-size:34px;color:#9a9a9a}
+  .pieza{position:absolute;left:190px;width:720px}
+  .pieza .k{font-size:26px;color:#8a8a8a}
+  .pieza .n{font-size:84px;font-weight:800;letter-spacing:-.03em;line-height:1.02;margin-top:6px;white-space:nowrap}
+  .pieza .e{display:flex;align-items:center;gap:14px;font-size:32px;margin-top:10px;color:#d8d8d8}
+  .pieza .e svg{width:34px;height:34px;flex:none}
+  canvas{position:absolute;left:0;top:0}
+  .grande{position:absolute;left:60px;right:60px;top:50%;text-align:center;font-weight:900;letter-spacing:-.025em;line-height:.95;text-transform:uppercase}
+  .tag{position:absolute;left:0;right:0;text-align:center;font-weight:200;letter-spacing:-.05em;line-height:.95}
+  .pill{display:inline-block;border:2px solid #fff;border-radius:999px;padding:22px 44px;font-size:40px;font-weight:500}
+  #logo{position:absolute;left:390px;width:300px;filter:drop-shadow(0 0 14px rgba(46,140,255,.85)) drop-shadow(0 0 40px rgba(46,140,255,.5))}
+</style></head>
+<body>
+<div class="capa" id="A"></div>
+<div class="capa" id="C">
+  <canvas id="linea" width="1080" height="1920"></canvas>
+  <p id="titulo">¿Es compatible?</p>
+  <p id="sub">Así se revisa un PC antes de comprar.</p>
+</div>
+<div class="capa" id="W"><p class="grande" id="Wt"></p></div>
+<div class="capa" id="F">
+  <img id="logo" src="logo.svg" alt="">
+  <div class="tag" id="tag"></div>
+  <div id="pie" style="position:absolute;left:0;right:0;text-align:center"></div>
+</div>
+<script>
+const AZUL = '#2E8CFF';
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = (x) => 1 - Math.pow(1 - clamp(x), 4);
+const easeIO = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+function rnd(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+const med = document.createElement('canvas').getContext('2d');
+const ancho = (txt, px, peso = 900) => { med.font = `${peso} ${px}px "Inter Display"`; return med.measureText(txt.toUpperCase()).width * 0.98; };
+const cabe = (txt, max, base, peso) => Math.min(base, base * max / ancho(txt, base, peso));
+const OK = `<svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="none" stroke="${AZUL}" stroke-width="2.4"/><path d="M10 17.5l5 5 9-11" fill="none" stroke="${AZUL}" stroke-width="2.8"/></svg>`;
+const NO = `<svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M11 11l12 12M23 11L11 23" stroke="#fff" stroke-width="2.8"/></svg>`;
+
+const BEAT = 0.46;
+const T = { A: 0, C: 3.7, W: 10.6, F: 13.4, FIN: 18.5 };
+
+/* ===== A: el problema ===== */
+const FRASES = [[0.2, 'Compraste todo.'], [0.2 + 2 * BEAT, 'Lo armaste.'], [0.2 + 4 * BEAT, 'No prende.']];
+const nA = FRASES.map(([, f]) => { const p = document.createElement('p'); p.className = 'l'; p.textContent = f; $('A').appendChild(p); return p; });
+function escenaA(t) {
+  const A = $('A');
+  const blanco = t >= 0.2 + 6 * BEAT;               // "No era compatible." sobre blanco
+  A.style.background = blanco ? '#fff' : '#000';
+  nA.forEach((el, i) => {
+    const t0 = FRASES[i][0], sig = FRASES[i + 1] ? FRASES[i + 1][0] : 99;
+    const vis = t >= t0 && t < sig && !blanco;
+    el.style.display = vis ? 'block' : 'none';
+    if (!vis) return;
+    const k = ease((t - t0) / 0.25);
+    const px = cabe(FRASES[i][1], 940, 200, 900);
+    el.style.fontSize = px + 'px'; el.style.top = (960 - px / 2) + 'px';
+    el.style.filter = `blur(${(1 - k) * 16}px)`; el.style.transform = `scale(${1.15 - .15 * k})`; el.style.opacity = k;
+    if (i === 2) {                                     // falla de pantalla en "No prende."
+      const g = prog(t, t0 + 0.35, sig);
+      const r = rnd(Math.floor(t * 30) + 3);
+      el.style.transform += ` translateX(${(r() - .5) * 90 * g}px)`;
+      el.style.filter += ` drop-shadow(${10 * g}px 0 0 ${AZUL})`;
+      el.style.clipPath = g > 0 && r() < g ? `inset(${r() * 45}% 0 ${r() * 35}% 0)` : 'none';
+      el.style.opacity = k * (1 - g * 0.3 * r());
+    }
+  });
+  let fin = A.querySelector('.fin');
+  if (!fin) { fin = document.createElement('p'); fin.className = 'l fin'; fin.innerHTML = 'No era<br>compatible.'; fin.style.color = '#000'; fin.style.lineHeight = '.95'; A.appendChild(fin); }
+  fin.style.display = blanco ? 'block' : 'none';
+  if (blanco) {
+    const k = ease((t - (0.2 + 6 * BEAT)) / 0.22);
+    fin.style.fontSize = '150px'; fin.style.top = '810px';
+    fin.style.transform = `scale(${1.12 - .12 * k})`; fin.style.filter = `blur(${(1 - k) * 10}px)`;
+  }
+}
+
+/* ===== C: la cadena de compatibilidad ===== */
+const PIEZAS = [
+  ['Procesador', 'Ryzen 5 7600X', 'Socket AM5 · usa DDR5'],
+  ['Board', 'B650 · AM5', 'Mismo socket que el procesador'],
+  ['Memoria', 'DDR5 6000', 'La board pide DDR5'],
+  ['Tarjeta de video', 'RTX 5060 Ti', 'Tu PC consume ≈ 375 W'],
+  ['Fuente', '650 W 80+', 'Recomendada: 600 W o más'],
+];
+const Y0 = 470, PASO = 240, XL = 120;
+const nC = PIEZAS.map(([k, n, e], i) => {
+  const d = document.createElement('div'); d.className = 'pieza';
+  d.innerHTML = `<p class="k mono">${String(i + 1).padStart(2, '0')} · ${k.toUpperCase()}</p><p class="n">${n}</p><p class="e">${OK}<span>${e}</span></p>`;
+  d.style.top = (Y0 + i * PASO - 18) + 'px';
+  $('C').appendChild(d); return d;
+});
+const t0Pieza = (i) => T.C + 0.6 + i * 2 * BEAT;
+const T_MAL = T.C + 5.0;     // la memoria cambia a DDR4
+const T_BIEN = T_MAL + 2 * BEAT;
+function escenaC(t) {
+  const lt = t - T.C;
+  const tit = $('titulo'), sub = $('sub');
+  const kt = ease(lt / 0.35);
+  tit.style.opacity = kt; tit.style.transform = `translateY(${(1 - kt) * 30}px)`; tit.style.filter = `blur(${(1 - kt) * 12}px)`;
+  const ks = ease((lt - 0.2) / 0.4); sub.style.opacity = ks;
+  // línea de circuito que baja y nodos
+  const cx = $('linea').getContext('2d');
+  cx.clearRect(0, 0, 1080, 1920);
+  const ultimo = PIEZAS.filter((_, i) => t >= t0Pieza(i)).length;
+  const hasta = ultimo ? Y0 + (ultimo - 1) * PASO + 60 : Y0;
+  const yLinea = Y0 - 40 + (hasta - Y0 + 40) * 1;
+  cx.strokeStyle = 'rgba(255,255,255,.18)'; cx.lineWidth = 3;
+  cx.beginPath(); cx.moveTo(XL, Y0 - 40); cx.lineTo(XL, yLinea); cx.stroke();
+  // pulso azul que viaja hasta la pieza más nueva
+  if (ultimo) {
+    const tp = t0Pieza(ultimo - 1), yDest = Y0 + (ultimo - 1) * PASO + 30;
+    const kp = easeIO((t - tp) / 0.35);
+    const yP = (ultimo > 1 ? Y0 + (ultimo - 2) * PASO + 30 : Y0 - 40) + (yDest - (ultimo > 1 ? Y0 + (ultimo - 2) * PASO + 30 : Y0 - 40)) * kp;
+    cx.save(); cx.shadowColor = AZUL; cx.shadowBlur = 24; cx.strokeStyle = AZUL; cx.lineWidth = 5;
+    cx.beginPath(); cx.moveTo(XL, Math.max(Y0 - 40, yP - 140)); cx.lineTo(XL, yP); cx.stroke(); cx.restore();
+  }
+  nC.forEach((el, i) => {
+    const t0 = t0Pieza(i), k = ease((t - t0) / 0.3);
+    el.style.opacity = k; el.style.transform = `translateX(${(1 - k) * 60}px)`; el.style.filter = `blur(${(1 - k) * 12}px)`;
+    // nodo
+    if (t >= t0) {
+      const y = Y0 + i * PASO + 30, mal = i === 2 && t >= T_MAL && t < T_BIEN;
+      cx.save(); cx.shadowColor = mal ? '#fff' : AZUL; cx.shadowBlur = 18 * k;
+      cx.fillStyle = '#000'; cx.strokeStyle = mal ? '#fff' : AZUL; cx.lineWidth = 4;
+      cx.beginPath(); cx.arc(XL, y, 14, 0, 7); cx.fill(); cx.stroke();
+      cx.beginPath(); cx.moveTo(XL + 14, y); cx.lineTo(XL + 50, y); cx.stroke(); cx.restore();
+    }
+  });
+  // la memoria equivocada
+  const mem = nC[2];
+  const mal = t >= T_MAL && t < T_BIEN;
+  const n = mem.querySelector('.n'), e = mem.querySelector('.e');
+  if (mal) {
+    if (n.textContent !== 'DDR4 3200') { n.textContent = 'DDR4 3200'; e.innerHTML = `${NO}<span>La board es DDR5: no entra</span>`; }
+    const r = rnd(Math.floor(t * 30));
+    const g = 1 - prog(t, T_MAL, T_MAL + 0.4);
+    mem.style.transform = `translateX(${(r() - .5) * 50 * g}px)`;
+    n.style.textDecoration = t > T_MAL + 0.5 ? 'line-through' : 'none'; n.style.textDecorationThickness = '6px';
+    n.style.color = '#fff';
+    mem.style.filter = g > .2 ? `drop-shadow(8px 0 0 ${AZUL})` : 'none';
+  } else if (t >= T_BIEN) {
+    if (n.textContent !== 'DDR5 6000') { n.textContent = 'DDR5 6000'; e.innerHTML = `${OK}<span>Ahora sí: la board pide DDR5</span>`; }
+    n.style.textDecoration = 'none';
+    const k = ease((t - T_BIEN) / 0.3);
+    mem.style.filter = `blur(${(1 - k) * 10}px)`; mem.style.transform = 'none';
+  }
+  // aviso abajo
+  let av = $('C').querySelector('.aviso');
+  if (!av) { av = document.createElement('p'); av.className = 'aviso mono'; av.style.cssText = 'position:absolute;left:104px;top:1620px;font-size:32px;color:#cfcfcf'; $('C').appendChild(av); }
+  av.textContent = mal ? 'UNA PIEZA MAL Y NO PRENDE.' : t >= T_BIEN ? 'TODO COMPATIBLE.' : '';
+  av.style.color = t >= T_BIEN ? AZUL : '#cfcfcf';
+  $('C').style.opacity = 1 - prog(t, T.W - 0.15, T.W);
+}
+
+/* ===== W: lo revisamos ===== */
+const GOLPES = [
+  [T.W, '#000', '#fff', 'Socket.'],
+  [T.W + 1 * BEAT, '#000', '#fff', 'Memoria.'],
+  [T.W + 2 * BEAT, '#000', '#fff', 'Potencia.'],
+  [T.W + 3 * BEAT, AZUL, '#fff', 'Revisado.'],
+  [T.W + 5 * BEAT, '#fff', '#000', 'Antes de<br>que pagues.'],
+];
+function escenaW(t) {
+  let c = GOLPES[0]; for (const g of GOLPES) if (t >= g[0]) c = g;
+  const [t0, fondo, color, txt] = c, el = $('Wt');
+  $('W').style.background = fondo; el.style.color = color; el.innerHTML = txt;
+  const px = txt.includes('<br>') ? 170 : cabe(txt, 940, 250, 900);
+  el.style.fontSize = px + 'px';
+  const k = ease((t - t0) / 0.22);
+  el.style.transform = `translateY(-50%) scale(${1.12 - .12 * k})`; el.style.filter = `blur(${(1 - k) * 10}px)`;
+}
+
+/* ===== F: cierre ===== */
+function escenaF(t) {
+  const lt = t - T.F;
+  const lg = $('logo'); const k = ease(lt / 0.6);
+  lg.style.top = (420 - 20 * k) + 'px'; lg.style.opacity = k; lg.style.transform = `scale(${0.92 + .08 * k})`;
+  const tag = $('tag');
+  if (!tag.dataset.ok) { tag.innerHTML = '<div>Arma tu PC</div><div>sin errores.</div>'; tag.dataset.ok = 1; }
+  tag.style.top = '780px'; tag.style.fontSize = '150px';
+  [...tag.children].forEach((d, i) => { const q = ease(prog(lt, 0.25 + i * .15, 0.85 + i * .15)); d.style.opacity = q; d.style.filter = `blur(${(1 - q) * 14}px)`; d.style.transform = `translateY(${(1 - q) * 30}px)`; });
+  const pie = $('pie');
+  if (!pie.dataset.ok) {
+    pie.innerHTML = `<p style="font-size:36px;color:#bdbdbd">El armador de la página revisa socket,<br>memoria y fuente por ti.</p>
+      <div style="margin-top:50px"><span class="pill">wolftech.com.co</span></div>
+      <p class="mono" style="font-size:31px;color:#cfcfcf;margin-top:40px">COTIZA POR WHATSAPP · ENVÍOS A TODA COLOMBIA</p>`;
+    pie.dataset.ok = 1;
+  }
+  pie.style.top = '1140px';
+  [...pie.children].forEach((d, i) => { const q = ease(prog(lt, 0.8 + i * .15, 1.4 + i * .15)); d.style.opacity = q; d.style.transform = `translateY(${(1 - q) * 30}px)`; });
+  document.body.style.opacity = 1 - prog(t, T.FIN - 0.35, T.FIN);
+}
+
+function render(t) {
+  const m = (id, on) => { $(id).style.display = on ? 'block' : 'none'; };
+  m('A', t < T.C); m('C', t >= T.C && t < T.W); m('W', t >= T.W && t < T.F); m('F', t >= T.F);
+  if (t < T.C) escenaA(t); else if (t < T.W) escenaC(t); else if (t < T.F) escenaW(t); else escenaF(t);
+}
+window.listo = document.fonts.ready;
+window.render = render;
+</script>
+</body></html>
