@@ -1,10 +1,23 @@
 'use client';
-/* Marco del producto: foto real o espacio reservado. Se inclina con el mouse. */
-import { useRef } from 'react';
+/* Marco del producto: foto real o espacio reservado. Se inclina con el mouse.
+   La foto la optimiza Vercel (next/image): tamaño justo para cada pantalla,
+   formato AVIF/WebP y caché en el CDN. Mientras carga se ve el nombre de la marca
+   y la foto aparece con un fundido suave. */
+import { useRef, useState } from 'react';
+import Image from 'next/image';
 import { CODIGO_CAT } from '@/lib/catalogo';
 
-export default function Marco({ p, badge = '', prioridad = false }) {
+// cuánto ocupa la foto en pantalla, para que el navegador pida el tamaño justo
+const TAMANOS = {
+  xl: '(max-width: 760px) 100vw, 60vw',
+  lg: '(max-width: 760px) 100vw, 30vw',
+  ficha: '(max-width: 900px) 100vw, 50vw',
+  normal: '(max-width: 600px) 50vw, (max-width: 1100px) 33vw, 22vw',
+};
+
+export default function Marco({ p, badge = '', prioridad = false, tam = 'normal' }) {
   const ref = useRef(null);
+  const [cargada, setCargada] = useState(false);
   const mover = (e) => {
     if (e.pointerType !== 'mouse') return;
     const el = ref.current, r = el.getBoundingClientRect();
@@ -24,8 +37,20 @@ export default function Marco({ p, badge = '', prioridad = false }) {
       {badge ? <span className="frame__badge">{badge}</span> : null}
       <div className="frame__in">
         {p.foto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={p.foto} alt={`${p.marca} ${p.nombre}`} loading={prioridad ? 'eager' : 'lazy'} decoding="async" />
+          <>
+            {/* se ve mientras la foto carga */}
+            <div className={'frame__ph' + (cargada ? ' is-hidden' : '')} aria-hidden="true"><b>{p.marca}</b></div>
+            <Image
+              src={p.foto}
+              alt={`${p.marca} ${p.nombre}`}
+              fill
+              sizes={TAMANOS[tam] || TAMANOS.normal}
+              quality={80}
+              priority={prioridad}
+              className={'frame__img' + (cargada ? ' is-loaded' : '')}
+              onLoad={() => setCargada(true)}
+            />
+          </>
         ) : (
           <>
             <div className="frame__ph" aria-hidden="true"><b>{p.marca}</b></div>

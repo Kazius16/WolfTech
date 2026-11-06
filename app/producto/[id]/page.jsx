@@ -89,7 +89,7 @@ export default async function Producto({ params }) {
         <Link className="pd__back" href={urlCat}><IconoFlecha />Ver más {p.categoria.toLowerCase()}</Link>
       </div>
       <div className="pd__main">
-        <div className="curtain"><Marco p={p} prioridad /></div>
+        <div className="curtain"><Marco p={p} prioridad tam="ficha" /></div>
         <div className="pd__info">
           <p className="pd__brand">{p.marca}</p>
           <h1 className="pd__name"><span className="wipe is-in">{nombreCorto(p)}</span></h1>

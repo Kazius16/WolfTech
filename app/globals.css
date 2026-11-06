@@ -498,3 +498,9 @@ a{color:inherit}
 .pd__more h2.pd__h{font:300 clamp(26px,2.6vw,40px)/1 var(--display);letter-spacing:-.035em;margin-bottom:6px}
 .admin__round{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:14px}
 @media (max-width:760px){.pd__back{display:none}}
+
+/* fotos optimizadas: aparecen con un fundido cuando terminan de cargar */
+.frame img.frame__img{opacity:0;transition:opacity .45s var(--ease),transform .9s var(--ease)}
+.frame img.frame__img.is-loaded{opacity:1}
+.frame__ph.is-hidden{opacity:0;transition:opacity .45s var(--ease)}
+.no-js .frame img.frame__img{opacity:1}

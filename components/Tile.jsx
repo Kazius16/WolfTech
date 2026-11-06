@@ -16,7 +16,7 @@ export default function Tile({ p, size = '', i = 0 }) {
   return (
     <article className={`tile ${size ? 'tile--' + size : ''}`} style={{ '--d': Math.min(i, 8) * 70 + 'ms' }}>
       <Link className="tile__open curtain" href={href} aria-label={`Ver ${p.marca} ${p.nombre}`} prefetch={false}>
-        <Marco p={p} badge={size ? 'Destacado' : ''} prioridad={size === 'xl'} />
+        <Marco p={p} badge={size ? 'Destacado' : ''} prioridad={size === 'xl' || size === 'lg'} tam={size || 'normal'} />
       </Link>
       <div className="tile__body">
         <p className="tile__brand">{p.marca} · {p.categoria}</p>

@@ -34,8 +34,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="es-CO" className={mono.variable}>
       <head>
+        <link rel="preconnect" href="https://dprucbhidjusmxrmhcqw.supabase.co" />
         <noscript>
-          <style>{'.curtain,[data-reveal="title"],.wipe,.nav .rv{clip-path:none!important;filter:none!important;opacity:1!important}.ch{opacity:1!important;filter:none!important;transform:none!important}'}</style>
+          <style>{'.curtain,[data-reveal="title"],.wipe,.nav .rv{clip-path:none!important;filter:none!important;opacity:1!important}.ch{opacity:1!important;filter:none!important;transform:none!important}.frame img{opacity:1!important}'}</style>
         </noscript>
       </head>
       <body>
