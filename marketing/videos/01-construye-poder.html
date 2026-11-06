@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;background:#000;overflow:hidden}
+  body{font-family:'Inter Display','Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  .capa{position:absolute;inset:0;display:none;overflow:hidden}
+  .mono{font-family:'DejaVu Sans Mono',monospace;letter-spacing:.08em}
+  /* A: lista de problemas */
+  #A .pila{position:absolute;left:0;right:0;text-align:center}
+  #A .l{position:absolute;left:0;right:0;text-align:center;font-weight:900;letter-spacing:-.02em;line-height:1;white-space:nowrap;text-transform:uppercase}
+  #A .glitch{position:absolute;inset:0}
+  /* B y C: palabra grande */
+  .grande{position:absolute;left:60px;right:60px;top:50%;text-align:center;font-weight:900;letter-spacing:-.025em;line-height:.9;white-space:nowrap;text-transform:uppercase}
+  .etq{position:absolute;left:0;right:0;text-align:center;font-size:34px}
+  /* filas */
+  .fila{position:absolute;left:0;white-space:nowrap;font-weight:900;font-size:150px;letter-spacing:-.04em;line-height:1;text-transform:uppercase}
+  canvas{position:absolute;left:0;top:0}
+  .tag{position:absolute;left:0;right:0;text-align:center;font-weight:200;letter-spacing:-.05em;line-height:.92}
+  .tag span{display:inline-block}
+  .pie{position:absolute;left:0;right:0;text-align:center}
+  .pill{display:inline-block;border:2px solid #fff;border-radius:999px;padding:22px 44px;font-size:40px;font-weight:500;letter-spacing:-.01em}
+</style></head>
+<body>
+<!-- A -->
+<div class="capa" id="A"></div>
+<!-- B / C: palabra grande sobre color -->
+<div class="capa" id="W"><p class="etq mono" id="Wl"></p><p class="grande" id="Wt"></p></div>
+<!-- filas de componentes -->
+<div class="capa" id="R"></div>
+<!-- D/E/F: circuito y lobo -->
+<div class="capa" id="L">
+  <canvas id="pistas" width="1080" height="1920"></canvas>
+  <canvas id="lobo" width="1080" height="1920"></canvas>
+  <p class="tag" id="tag"></p>
+  <div class="pie" id="pie"></div>
+</div>
+
+<script>
+const AZUL = '#2E8CFF';
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = (x) => 1 - Math.pow(1 - clamp(x), 4);           // salida suave
+const easeIO = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+function rnd(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+
+/* ====================== tiempos (120 BPM: un golpe cada 0,5 s) ====================== */
+const BEAT = 0.45;
+const T = { A: 0, B: 3.5, C: 5.0, R: 7.7, D: 8.6, E: 12.0, F: 14.2, FIN: 18.0 };
+
+/* ====================== A: lo que molesta ====================== */
+const MALES = ['Lag.', 'Tirones.', '30 FPS.', 'Se calienta.', 'Pantallazo azul.', 'Otra vez.'];
+const A0 = 0.25;
+const medidor = document.createElement('canvas').getContext('2d');
+function ancho(txt, px, peso = 900) { medidor.font = `${peso} ${px}px "Inter Display"`; return medidor.measureText(txt.toUpperCase()).width * (1 - 0.02); }
+function tamañoQueCabe(txt, max, base, peso) { return Math.min(base, base * max / ancho(txt, base, peso)); }
+const nodosA = MALES.map((m) => { const p = document.createElement('p'); p.className = 'l'; p.textContent = m; $('A').appendChild(p); return p; });
+function escenaA(t) {
+  const n = MALES.filter((_, i) => t >= A0 + i * BEAT).length;
+  // tamaños por antigüedad
+  let alturas = [], total = 0;
+  const sz = MALES.map((m, i) => {
+    const edad = n - 1 - i;
+    if (i >= n) return 0;
+    const base = edad === 0 ? 190 : edad === 1 ? 104 : edad === 2 ? 78 : 62;
+    return tamañoQueCabe(m, edad === 0 ? 960 : 760, base, 900);
+  });
+  // animación del más nuevo
+  const tn = n ? t - (A0 + (n - 1) * BEAT) : 0;
+  const k = ease(tn / 0.28);
+  sz.forEach((s) => { total += s * 1.02; });
+  let y = 960 - total / 2 - 60;
+  nodosA.forEach((el, i) => {
+    if (i >= n) { el.style.display = 'none'; return; }
+    el.style.display = 'block';
+    const edad = n - 1 - i;
+    el.style.fontSize = sz[i] + 'px';
+    el.style.top = y + 'px';
+    y += sz[i] * 1.02;
+    const gris = edad === 0 ? 255 : Math.max(70, 200 - edad * 40);
+    el.style.color = `rgb(${gris},${gris},${gris})`;
+    if (edad === 0) {
+      el.style.filter = `blur(${(1 - k) * 18}px)`;
+      el.style.transform = `scale(${1.18 - 0.18 * k})`;
+      el.style.opacity = k;
+    } else { el.style.filter = 'none'; el.style.transform = 'none'; el.style.opacity = 1; }
+  });
+  // al final: falla de pantalla
+  const g = prog(t, 3.05, 3.5);
+  const cap = $('A');
+  if (g > 0) {
+    const r = rnd(Math.floor(t * 30) + 7);
+    const dx = (r() - .5) * 120 * g;
+    cap.style.transform = `translateX(${dx}px)`;
+    cap.style.filter = `drop-shadow(${12 * g}px 0 0 ${AZUL}) drop-shadow(${-10 * g}px 0 0 rgba(255,255,255,.6))`;
+    cap.style.clipPath = r() < g ? `inset(${r() * 40}% 0 ${r() * 40}% 0)` : 'none';
+    cap.style.opacity = 1 - prog(t, 3.38, 3.5);
+  } else { cap.style.transform = 'none'; cap.style.filter = 'none'; cap.style.clipPath = 'none'; cap.style.opacity = 1; }
+}
+
+/* ====================== B y C: palabras grandes ====================== */
+const CORTES = [
+  // [inicio, fondo, color, etiqueta, texto]
+  [T.B, '#fff', '#000', '', 'Se acabó.'],
+  [T.B + 0.75, AZUL, '#fff', '', 'Construye.'],
+  [T.C + 0 * BEAT, '#000', '#fff', 'Tarjeta de video', 'RTX 5070'],
+  [T.C + 1 * BEAT, '#fff', '#000', 'Procesador', '9800X3D'],
+  [T.C + 2 * BEAT, '#000', '#fff', 'Memoria', 'DDR5'],
+  [T.C + 3 * BEAT, AZUL, '#fff', 'Almacenamiento', 'NVMe Gen4'],
+  [T.C + 4 * BEAT, '#000', '#fff', 'Resolución', '1440p'],
+  [T.C + 5 * BEAT, '#fff', '#000', 'Rendimiento', '240 FPS'],
+];
+function escenaW(t) {
+  let c = null;
+  for (const x of CORTES) if (t >= x[0]) c = x;
+  const [t0, fondo, color, etq, txt] = c;
+  const lt = t - t0;
+  const W = $('W'), el = $('Wt'), lb = $('Wl');
+  W.style.background = fondo;
+  el.style.color = color; lb.style.color = color;
+  const px = tamañoQueCabe(txt, 940, txt.length < 6 ? 330 : 280, 900);
+  el.style.fontSize = px + 'px';
+  const k = ease(lt / 0.22);
+  el.style.transform = `translateY(-50%) scale(${1.12 - 0.12 * k}) translateX(${(1 - k) * 40}px)`;
+  el.style.filter = `blur(${(1 - k) * 10}px)`;
+  el.textContent = txt;
+  lb.textContent = etq.toUpperCase();
+  lb.style.top = (960 - px * 0.45 - 70) + 'px';
+  lb.style.opacity = prog(lt, 0.05, 0.18);
+}
+
+/* ====================== R: filas de componentes ====================== */
+const FILAS = ['Ryzen · RTX · DDR5 · NVMe · ', 'Boards · Fuentes · Chasis · ', 'WolfTech · WolfTech · WolfTech · ', 'Core · Ultra · Gen4 · 4K · ', 'RGB · AM5 · LGA1700 · ', 'Portátiles gamer · '];
+const nodosR = FILAS.map((f, i) => { const p = document.createElement('p'); p.className = 'fila'; p.textContent = f.repeat(6); p.style.top = (330 + i * 180) + 'px'; $('R').appendChild(p); return p; });
+function escenaR(t) {
+  const lt = t - T.R;
+  nodosR.forEach((el, i) => {
+    const dir = i % 2 ? 1 : -1, v = 900 + i * 120;
+    el.style.transform = `translateX(${-400 + dir * lt * v}px)`;
+    const destacada = i === 2;
+    el.style.color = destacada ? AZUL : (lt * 10 + i) % 3 < 1.4 ? '#fff' : '#3a3a3a';
+    el.style.opacity = prog(lt, i * 0.04, i * 0.04 + 0.12);
+  });
+  $('R').style.opacity = 1 - prog(t, T.D - 0.12, T.D);
+}
+
+/* ====================== D/E/F: circuito y lobo ====================== */
+const LOGO = { cx: 540, cy: 900, s: 330 };   // centro y "radio" en pantalla
+let fx = null, fxW = 0;
+const off = document.createElement('canvas'); off.width = off.height = 1024;
+const offx = off.getContext('2d');
+const salida = offx.createImageData(1024, 1024);
+function cargarFx() {
+  return new Promise((ok) => { const im = new Image(); im.onload = () => { const c = document.createElement('canvas'); c.width = c.height = 1024; const x = c.getContext('2d'); x.drawImage(im, 0, 0); fx = x.getImageData(0, 0, 1024, 1024).data; ok(); }; im.src = 'fx.png'; });
+}
+// pinta el lobo encendido hasta el frente "f" (0..1.2)
+function pintarLobo(f, pulso, tiempo) {
+  const o = salida.data;
+  for (let i = 0; i < 1024 * 1024; i++) {
+    const r = fx[i * 4], g = fx[i * 4 + 1] / 255, b = fx[i * 4 + 2] / 255;
+    const dpx = (r / 255 - 0.5) * 4 * 80;            // distancia al borde en píxeles de la textura
+    const dentro = clamp(0.5 - dpx * 0.9);
+    if (dentro <= 0) { o[i * 4 + 3] = 0; continue; }
+    const lit = clamp((f - g) / 0.05);
+    const banda = Math.exp(-Math.pow((g - f) / 0.025, 2)) * (f < 1.1 ? 1 : 0);
+    let pul = 0;
+    if (pulso > 0) for (let k = 0; k < 3; k++) { const c = ((tiempo * 0.22 + k / 3) % 1) * 1.25 - 0.1; pul += Math.exp(-Math.pow((g - c) / 0.03, 2)); }
+    const nodo = b > 0.2 ? b * lit * 0.6 : 0;
+    const blanco = 0.05 + lit * 0.9 + pul * 0.25 * lit;
+    const azul = banda * 1.6 + pul * 0.5 * lit * pulso + nodo;
+    o[i * 4] = clamp(blanco + azul * 0.18) * 255;
+    o[i * 4 + 1] = clamp(blanco + azul * 0.55) * 255;
+    o[i * 4 + 2] = clamp(blanco + azul) * 255;
+    o[i * 4 + 3] = dentro * 255;
+  }
+  offx.putImageData(salida, 0, 0);
+}
+// pistas de circuito que llegan al lobo
+const pistas = [];
+(function () {
+  const r = rnd(42), n = 34;
+  for (let i = 0; i < n; i++) {
+    const ang = (i / n) * Math.PI * 2 + (r() - .5) * 0.12;
+    const dx = Math.cos(ang), dy = Math.sin(ang);
+    const sx = Math.sign(dx) || 1, sy = Math.sign(dy) || 1;
+    const horiz = Math.abs(dx) > Math.abs(dy);
+    let x = LOGO.cx + dx * LOGO.s * (0.95 + r() * 0.2), y = LOGO.cy + dy * LOGO.s * (0.95 + r() * 0.2);
+    const pts = [[x, y]];
+    const L1 = (0.15 + r() * 0.4) * LOGO.s; if (horiz) x += sx * L1; else y += sy * L1; pts.push([x, y]);
+    const L2 = (0.1 + r() * 0.3) * LOGO.s; x += sx * L2; y += sy * L2; pts.push([x, y]);
+    if (horiz) x += sx * 2200; else y += sy * 2200; pts.push([x, y]);
+    pts.reverse();                                        // de afuera hacia el lobo
+    let len = 0; const seg = [];
+    for (let k = 1; k < pts.length; k++) { const l = Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]); seg.push(l); len += l; }
+    pistas.push({ pts, seg, len, retraso: r() * 0.5, vel: 1 + r() * 0.6, nodo: r() < 0.4 });
+  }
+})();
+function punto(p, s) {
+  let d = s;
+  for (let k = 0; k < p.seg.length; k++) { if (d <= p.seg[k]) { const a = p.pts[k], b = p.pts[k + 1], u = d / p.seg[k]; return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; } d -= p.seg[k]; }
+  return p.pts[p.pts.length - 1];
+}
+function pintarPistas(t, ctx, apagar) {
+  ctx.clearRect(0, 0, 1080, 1920);
+  const lt = t - T.D;
+  ctx.lineJoin = 'round';
+  pistas.forEach((p) => {
+    // la pista se dibuja desde el borde de la pantalla hacia el lobo
+    const crecer = easeIO((lt - p.retraso * 0.6) / 1.1);
+    if (crecer <= 0) return;
+    const L = p.len * crecer;
+    ctx.strokeStyle = `rgba(255,255,255,${0.12 * (1 - apagar)})`; ctx.lineWidth = 2;
+    ctx.beginPath();
+    const pasos = 30;
+    for (let k = 0; k <= pasos; k++) { const q = punto(p, (L * k) / pasos); if (k) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }
+    ctx.stroke();
+    // pulsos de corriente azul que viajan al lobo
+    for (let j = 0; j < 2; j++) {
+      const t0 = 0.5 + p.retraso + j * 0.55;
+      const s = (lt - t0) * 1400 * p.vel;
+      if (s < 0 || s > L) continue;
+      const cola = 260;
+      ctx.save(); ctx.shadowColor = AZUL; ctx.shadowBlur = 22;
+      for (let k = 0; k < 12; k++) {
+        const s0 = s - cola * k / 12, s1 = s - cola * (k + 1) / 12;
+        if (s1 < 0) break;
+        const a = punto(p, s0), b = punto(p, s1), f = 1 - k / 12;
+        ctx.strokeStyle = `rgba(${Math.round(46 + 200 * f * f * f)},${Math.round(140 + 115 * f * f)},255,${(0.95 * f * (1 - apagar)).toFixed(3)})`;
+        ctx.lineWidth = 3 + f * 3;
+        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  });
+}
+function escenaL(t) {
+  const lt = t - T.D;
+  const cp = $('pistas').getContext('2d'), cl = $('lobo').getContext('2d');
+  const apagar = prog(t, T.E + 0.6, T.F + 0.4);
+  pintarPistas(t, cp, apagar * 0.85);
+  // encendido del lobo: arranca cuando llegan los primeros pulsos
+  const f = easeIO(prog(lt, 1.15, 2.9)) * 1.2;
+  const pulso = prog(t, T.D + 3.0, T.D + 3.4);
+  pintarLobo(f, pulso, t);
+  // posición: centrado; en E y F sube y se achica
+  const subir = easeIO(prog(t, T.E, T.E + 0.9));
+  const final = easeIO(prog(t, T.F, T.F + 0.8));
+  const escala = 1 + 0.04 * Math.sin(lt * 0.8) * (1 - subir) - 0.18 * subir - 0.22 * final;
+  const cy = LOGO.cy - 190 * subir - 40 * final;
+  const lado = LOGO.s * 2 * escala;
+  cl.clearRect(0, 0, 1080, 1920);
+  // resplandor azul
+  cl.save(); cl.filter = 'blur(40px)'; cl.globalAlpha = 0.8 * clamp(f / 1.2) ; cl.globalCompositeOperation = 'lighter';
+  cl.drawImage(off, LOGO.cx - lado / 2, cy - lado / 2, lado, lado);
+  cl.filter = `blur(14px)`; cl.globalAlpha = 0.7 * clamp(f / 1.2);
+  cl.drawImage(off, LOGO.cx - lado / 2, cy - lado / 2, lado, lado); cl.restore();
+  cl.save(); cl.globalCompositeOperation = 'source-over';
+  // tinte azul del resplandor
+  cl.globalCompositeOperation = 'source-atop'; cl.fillStyle = 'rgba(46,140,255,0.55)'; cl.fillRect(0, 0, 1080, 1920); cl.restore();
+  cl.drawImage(off, LOGO.cx - lado / 2, cy - lado / 2, lado, lado);
+  // aparición inicial
+  $('L').style.opacity = prog(t, T.D, T.D + 0.15);
+
+  // E: "Construye poder."
+  const tag = $('tag');
+  if (t >= T.E + 0.5) {
+    const lineas = ['Construye', 'poder.'];
+    if (!tag.dataset.ok) { tag.innerHTML = lineas.map((l) => `<div>${[...l].map((c) => `<span>${c}</span>`).join('')}</div>`).join(''); tag.dataset.ok = 1; }
+    tag.style.display = 'block';
+    tag.style.fontSize = '190px';
+    tag.style.top = (cy + lado / 2 + 70 - 30 * final) + 'px';
+    let i = 0;
+    tag.querySelectorAll('span').forEach((s) => {
+      const k = ease(prog(t, T.E + 0.5 + i * 0.045, T.E + 0.5 + i * 0.045 + 0.5)); i++;
+      s.style.opacity = k; s.style.filter = `blur(${(1 - k) * 16}px)`; s.style.transform = `translateY(${(1 - k) * 40}px)`;
+    });
+    tag.style.transform = `scale(${1 - 0.3 * final})`;
+    tag.style.transformOrigin = '50% 0';
+  } else tag.style.display = 'none';
+
+  // F: cierre
+  const pie = $('pie');
+  if (t >= T.F + 0.3) {
+    if (!pie.dataset.ok) {
+      pie.innerHTML = `
+        <p style="font-size:64px;font-weight:600;letter-spacing:-.03em">WolfTech</p>
+        <p style="font-size:34px;color:#9a9a9a;margin-top:10px">Componentes y PC gamer · Medellín</p>
+        <div style="margin-top:56px"><span class="pill">wolftech.com.co</span></div>
+        <p class="mono" style="font-size:31px;color:#cfcfcf;margin-top:40px">COTIZA POR WHATSAPP · ENVÍOS A TODA COLOMBIA</p>`;
+      pie.dataset.ok = 1;
+    }
+    pie.style.display = 'block';
+    pie.style.top = '1230px';
+    [...pie.children].forEach((c, i) => {
+      const k = ease(prog(t, T.F + 0.3 + i * 0.12, T.F + 0.9 + i * 0.12));
+      c.style.opacity = k; c.style.transform = `translateY(${(1 - k) * 30}px)`; c.style.filter = `blur(${(1 - k) * 8}px)`;
+    });
+  } else pie.style.display = 'none';
+  // fundido final
+  document.body.style.opacity = 1 - prog(t, T.FIN - 0.35, T.FIN);
+}
+
+/* ====================== director ====================== */
+function render(t) {
+  const mostrar = (id, on) => { $(id).style.display = on ? 'block' : 'none'; };
+  mostrar('A', t < T.B);
+  mostrar('W', t >= T.B && t < T.R);
+  mostrar('R', t >= T.R && t < T.D);
+  mostrar('L', t >= T.D);
+  if (t < T.B) escenaA(t);
+  else if (t < T.R) escenaW(t);
+  else if (t < T.D) escenaR(t);
+  else escenaL(t);
+}
+window.listo = document.fonts.ready.then(cargarFx);
+window.render = render;
+window.T = T;
+</script>
+</body></html>
