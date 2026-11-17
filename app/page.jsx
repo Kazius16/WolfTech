@@ -2,6 +2,7 @@
 import { REDES, SITIO, TIENDA, telefonoIntl } from '@/lib/config';
 import { obtenerCatalogo } from '@/lib/datos';
 import Hero from '@/components/Hero';
+import Novedades from '@/components/Novedades';
 import Catalogo from '@/components/Catalogo';
 import Armador from '@/components/Armador';
 import ComoCompras from '@/components/ComoCompras';
@@ -32,6 +33,7 @@ export default async function Inicio() {
         ],
       }} />
       <Hero />
+      <Novedades />
       <section className="cat" id="catalogo" aria-labelledby="catTitle">
         <div className="cat__top">
           <h2 className="sec-title" id="catTitle" data-reveal="title">Catálogo</h2>

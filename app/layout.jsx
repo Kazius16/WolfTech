@@ -6,6 +6,7 @@ import Tienda from '@/components/Tienda';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Arranque from '@/components/Arranque';
+import WhatsAppFlotante from '@/components/WhatsAppFlotante';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono', display: 'swap' });
 
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }) {
           {children}
           <Footer fecha={fecha} />
           <Arranque />
+          <WhatsAppFlotante />
         </Tienda>
       </body>
     </html>
