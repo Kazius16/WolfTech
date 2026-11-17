@@ -1,18 +1,34 @@
 /* Pie de página (se arma en el servidor) */
 import Link from 'next/link';
 import Logo from './Logo';
+import IconoRed from './IconosRedes';
 import { REDES, WHATSAPP, telefonoBonito } from '@/lib/config';
 import { ORDEN_CATEGORIAS, slugCategoria } from '@/lib/catalogo';
 
 export default function Footer({ fecha, categorias = ORDEN_CATEGORIAS }) {
-  const redes = [['Instagram', REDES.instagram], ['TikTok', REDES.tiktok], ['Facebook', REDES.facebook]].filter(([, u]) => u);
+  // usuario visible: lo que va después de la última / (o del id en Facebook)
+  const usuario = (u) => '@' + u.replace(/\/+$/, '').split('/').pop().replace(/^@/, '').replace(/^profile\.php\?id=.*/, 'WolfTech');
+  const redes = [
+    ['tiktok', 'TikTok', REDES.tiktok],
+    ['instagram', 'Instagram', REDES.instagram],
+    ['facebook', 'Facebook', REDES.facebook],
+  ].filter(([, , u]) => u);
   return (
     <footer className="foot">
       <div className="foot__brand"><Logo />WolfTech</div>
-      <div className="foot__links">
-        <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener">WhatsApp <span className="num">{telefonoBonito()}</span></a>
-        {redes.map(([n, u]) => <a key={n} href={u} target="_blank" rel="noopener">{n}</a>)}
-      </div>
+      <section className="redes" aria-label="Redes sociales">
+        <p className="redes__t">Síguenos<small>Armados, novedades y precios antes que nadie.</small></p>
+        <div className="redes__lista">
+          {redes.map(([k, n, u]) => (
+            <a key={k} className="redes__a" href={u} target="_blank" rel="noopener" aria-label={`${n} de WolfTech`}>
+              <IconoRed red={k} /><span>{n}<small>{usuario(u)}</small></span>
+            </a>
+          ))}
+          <a className="redes__a" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener" aria-label="WhatsApp de WolfTech">
+            <IconoRed red="whatsapp" /><span>WhatsApp<small className="num">{telefonoBonito()}</small></span>
+          </a>
+        </div>
+      </section>
       <nav className="foot__cols" aria-label="Más enlaces">
         <div>
           <h2>Categorías</h2>
