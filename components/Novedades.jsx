@@ -2,6 +2,7 @@
 /* ============================================================
    FRANJA DE NOVEDADES — se desliza con el dedo (no pasa sola).
    Se llena sola con lo último que se agregó al catálogo.
+   Si hay menos de 3 productos nuevos (últimos 30 días), no aparece.
    ============================================================ */
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -13,7 +14,7 @@ import { IconoFlecha } from './Iconos';
 
 export default function Novedades() {
   const { productos } = useTienda();
-  const { titulo, nuevos, items } = novedades(productos);
+  const items = novedades(productos);
   const pista = useRef(null);
   const [borde, setBorde] = useState({ ini: true, fin: false });
 
@@ -34,8 +35,8 @@ export default function Novedades() {
   return (
     <section className="nov" aria-labelledby="novTitle">
       <div className="nov__top">
-        <h2 className="sec-title" id="novTitle" data-reveal="title">{titulo}</h2>
-        <p className="nov__lead">{nuevos ? 'Lo último que llegó al catálogo.' : 'Lo que más recomendamos esta semana.'}</p>
+        <h2 className="sec-title" id="novTitle" data-reveal="title">Novedades</h2>
+        <p className="nov__lead">Lo último que llegó al catálogo.</p>
         <div className="nov__arrows">
           <button onClick={() => mover(-1)} disabled={borde.ini} aria-label="Anteriores"><IconoFlecha /></button>
           <button onClick={() => mover(1)} disabled={borde.fin} aria-label="Siguientes" className="der"><IconoFlecha /></button>
@@ -45,7 +46,7 @@ export default function Novedades() {
         {items.map((p, i) => (
           <li className="nov__item" key={p.id}>
             <Link href={`/producto/${p.id}`} prefetch={false} className="nov__link">
-              <Marco p={p} badge={nuevos && i < 3 && p.creado ? 'Nuevo' : ''} />
+              <Marco p={p} badge={i < 3 ? 'Nuevo' : ''} />
               <p className="nov__brand">{p.marca} · {p.categoria}</p>
               <h3 className="nov__name">{nombreCorto(p)}</h3>
               <p className="nov__specs mono">{lineaSpecs(p)}</p>
