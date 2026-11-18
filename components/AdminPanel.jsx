@@ -35,6 +35,28 @@ export default function AdminPanel() {
       </form>
 
       <div className="admin__body">
+        <h2>Cobrar con link de pago</h2>
+        <p>Cuando ya confirmaste disponibilidad con el proveedor: arma el pedido, crea el link de Bold y mándaselo al cliente por WhatsApp. El cliente paga con tarjeta, PSE o Nequi.</p>
+        <form className="addp cobro" id="cobro" autoComplete="off">
+          <label>Cliente<input name="cliente" placeholder="Nombre" required /></label>
+          <label>Celular<input name="celular" inputMode="tel" placeholder="300 123 4567" /></label>
+          <label className="w2">Producto
+            <span className="cobro__add">
+              <input id="cobroProd" list="dlCobro" placeholder="Escribe: G203, 9800X3D…" />
+              <button className="btn btn--ghost btn--sm" type="button" id="cobroAdd">Agregar</button>
+            </span>
+          </label>
+          <datalist id="dlCobro" />
+          <ul className="cobro__items" id="cobroItems" />
+          <label>Envío / domicilio<input name="envio" inputMode="numeric" placeholder="0" /></label>
+          <label className="w2">Nota (opcional)<input name="nota" placeholder="Dirección, color, lo que sea" /></label>
+          <p className="addp__prev" id="cobroTotal" />
+          <div className="addp__btns"><button className="btn btn--solid btn--sm" type="submit">Crear link de pago</button></div>
+        </form>
+        <div id="cobroOut" />
+        <h3 className="admin__h3">Pedidos recientes</h3>
+        <ul className="photos" id="pedList" />
+
         <h2>Subir lista de precios (PDF)</h2>
         <p>Sube el PDF tal como lo manda el proveedor (J&amp;L o PYPHS). La página lo lee, te muestra qué cambió y tú decides. Los productos nuevos entran ocultos hasta que marques cuáles publicar.</p>
         <label className="drop" id="drop">

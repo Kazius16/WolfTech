@@ -396,6 +396,16 @@ a{color:inherit}
 .addp__prev{grid-column:1/-1;font-size:14px;color:#000;min-height:1.3em}
 .addp__btns{grid-column:1/-1}
 .edp{margin-bottom:14px}
+.cobro__add{display:flex;gap:8px}.cobro__add input{flex:1}
+.cobro__items{grid-column:1/-1;list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cobro__items li{display:grid;grid-template-columns:1fr 80px 130px auto;gap:10px;align-items:end;border-bottom:1px solid #eee;padding-bottom:8px}
+.cobro__items li.cobro__vacio{display:block;color:#777;font-size:14px;border:0}
+.cobro__n{font-size:14px;color:#000;align-self:center}
+.cobro__ok{border:1px solid #000;padding:16px 18px;margin:14px 0 4px;background:#f6f6f6}
+.cobro__url{word-break:break-all;font-size:13px;margin:6px 0 12px}
+.admin__h3{font-size:18px;margin:26px 0 8px}
+.ped--pagado .ped__e{color:#0a7a2f}.ped--anulado{opacity:.5}.ped--entregado .ped__e{color:#555}
+@media (max-width:760px){.cobro__items li{grid-template-columns:1fr 1fr}.cobro__n{grid-column:1/-1}}
 .edp__t{grid-column:1/-1;font-size:15px;font-weight:600;color:#000}
 .edp__nota{grid-column:1/-1;font-size:13px;color:#b00020}
 .edp__btns{display:flex;gap:10px;flex-wrap:wrap}
