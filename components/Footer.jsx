@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Logo from './Logo';
 import IconoRed from './IconosRedes';
-import { REDES, WHATSAPP, telefonoBonito } from '@/lib/config';
+import { REDES, RESENA_GOOGLE, WHATSAPP, telefonoBonito } from '@/lib/config';
 import { ORDEN_CATEGORIAS, slugCategoria } from '@/lib/catalogo';
 
 export default function Footer({ fecha, categorias = ORDEN_CATEGORIAS }) {
@@ -27,6 +27,11 @@ export default function Footer({ fecha, categorias = ORDEN_CATEGORIAS }) {
           <a className="redes__a" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener" aria-label="WhatsApp de WolfTech">
             <IconoRed red="whatsapp" /><span>WhatsApp<small className="num">{telefonoBonito()}</small></span>
           </a>
+          {RESENA_GOOGLE && (
+            <a className="redes__a" href={RESENA_GOOGLE} target="_blank" rel="noopener" aria-label="Déjanos una reseña en Google">
+              <IconoRed red="google" /><span>Google<small>Déjanos tu reseña</small></span>
+            </a>
+          )}
         </div>
       </section>
       <nav className="foot__cols" aria-label="Más enlaces">

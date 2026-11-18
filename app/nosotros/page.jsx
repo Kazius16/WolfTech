@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Legal from '@/components/Legal';
 import JsonLd from '@/components/JsonLd';
-import { SITIO, TIENDA, REDES } from '@/lib/config';
+import { SITIO, TIENDA, REDES, RESENA_GOOGLE } from '@/lib/config';
 
 export const metadata = {
   title: 'Quiénes somos',
@@ -40,6 +40,9 @@ export default function Nosotros() {
         <li><Link href="/envios">Envíos a toda Colombia</Link> con número de guía y paquete asegurado.</li>
         <li>Tus datos se tratan según nuestra <Link href="/privacidad">política de tratamiento de datos</Link>.</li>
       </ul>
+
+      <h2>¿Ya nos compraste?</h2>
+      <p>Tu opinión ayuda a que otros se animen a comprar con confianza. <a href={RESENA_GOOGLE} target="_blank" rel="noopener">Déjanos tu reseña en Google</a>; toma un minuto.</p>
 
       <h2>Síguenos</h2>
       <p>Publicamos armados, comparativas y novedades en{' '}
