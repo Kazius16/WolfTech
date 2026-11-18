@@ -26,6 +26,8 @@ export const metadata = {
     images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'WolfTech' }],
   },
   twitter: { card: 'summary_large_image' },
+  // verificación del sitio para Google Merchant Center
+  verification: { google: 'jWymHZ21uWze0w2ZGjPfDYwEnLgwk35YUzwwtsHEkIs' },
 };
 
 export const viewport = { themeColor: '#000000', width: 'device-width', initialScale: 1 };
