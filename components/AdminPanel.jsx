@@ -44,7 +44,7 @@ export default function AdminPanel() {
         <div id="impOut" />
 
         <h2>Editar producto</h2>
-        <p>Busca cualquier producto y toca «Editar» para cambiarle el nombre, el costo, el estado, la categoría o la foto. También puedes ocultarlo o borrarlo.</p>
+        <p>Busca cualquier producto. «Editar» abre todos sus datos; «Ocultar» lo quita de la tienda sin borrarlo (lo puedes volver a mostrar); «Borrar» lo elimina de la lista (toca dos veces para confirmar).</p>
         <div className="photos__tools">
           <input id="edQ" type="search" placeholder="Buscar: G203, 9800X3D, Cyborg…" aria-label="Buscar producto para editar" />
           <select id="edF" aria-label="Filtrar por estado" defaultValue="todos">

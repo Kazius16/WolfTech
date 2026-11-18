@@ -383,7 +383,7 @@ a{color:inherit}
 .photos__th img{width:100%;height:100%;object-fit:contain}
 .photos__n{font-size:14.5px;line-height:1.3}
 .photos__n small{display:block;color:#777;font-size:12.5px}
-.photos__act{display:flex;gap:8px;align-items:center}
+.photos__act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .photos__act label{cursor:pointer}
 .photos__act input{display:none}
 .photos__use{color:#555;font-size:13px;margin-top:10px}
