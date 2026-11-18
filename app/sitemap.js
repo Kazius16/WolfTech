@@ -13,6 +13,7 @@ export default async function sitemap() {
     { url: SITIO + '/', lastModified: hoy, changeFrequency: 'daily', priority: 1 },
     ...cats.map((c) => ({ url: `${SITIO}/categoria/${slugCategoria(c)}`, lastModified: hoy, changeFrequency: 'daily', priority: 0.8 })),
     ...productos.map((p) => ({ url: `${SITIO}/producto/${p.id}`, lastModified: p.actualizado ? new Date(p.actualizado) : hoy, changeFrequency: 'weekly', priority: p.estado === 'destacado' ? 0.8 : 0.6 })),
+    ...['nosotros', 'preguntas-frecuentes', 'medellin'].map((s) => ({ url: `${SITIO}/${s}`, changeFrequency: 'monthly', priority: 0.5 })),
     ...['envios', 'garantia', 'cambios-y-retracto', 'privacidad'].map((s) => ({ url: `${SITIO}/${s}`, changeFrequency: 'yearly', priority: 0.3 })),
   ];
 }

@@ -9,13 +9,19 @@ export const PAGINAS_LEGALES = [
   ['/privacidad', 'Tratamiento de datos'],
 ];
 
-export default function Legal({ ruta, titulo, lead, children }) {
+export const PAGINAS_INFO = [
+  ['/nosotros', 'Quiénes somos'],
+  ['/preguntas-frecuentes', 'Preguntas frecuentes'],
+  ['/medellin', 'Medellín y Valle de Aburrá'],
+];
+
+export default function Legal({ ruta, titulo, lead, children, info = false }) {
   return (
     <main className="legal">
       <nav className="crumbs" aria-label="Ruta"><Link href="/">Inicio</Link> / {titulo}</nav>
       <h1>{titulo}</h1>
       <p className="legal__lead">{lead}</p>
-      <p className="legal__upd">Vigente desde el {TIENDA.vigenciaPoliticas}</p>
+      {info ? <div className="legal__gap" /> : <p className="legal__upd">Vigente desde el {TIENDA.vigenciaPoliticas}</p>}
       {children}
       <h2>¿Dudas?</h2>
       <p>
@@ -23,7 +29,7 @@ export default function Legal({ ruta, titulo, lead, children }) {
         al correo <a href={`mailto:${TIENDA.correo}`}>{TIENDA.correo}</a>. Normalmente respondemos el mismo día.
       </p>
       <div className="legal__more">
-        {PAGINAS_LEGALES.filter(([r]) => r !== ruta).map(([r, t]) => <Link key={r} className="btn btn--line btn--sm" href={r}>{t}</Link>)}
+        {[...PAGINAS_INFO, ...PAGINAS_LEGALES].filter(([r]) => r !== ruta).map(([r, t]) => <Link key={r} className="btn btn--line btn--sm" href={r}>{t}</Link>)}
       </div>
     </main>
   );

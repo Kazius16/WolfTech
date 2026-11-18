@@ -478,6 +478,8 @@ a{color:inherit}
 .legal .crumbs a{text-decoration:none}
 .legal h1{font:200 clamp(52px,8vw,120px)/.9 var(--display);letter-spacing:-.05em;margin:0 0 22px -.04em}
 .legal__lead{font:300 clamp(19px,1.8vw,24px)/1.35 var(--display);letter-spacing:-.015em;color:#cfcfcf;margin-bottom:12px}
+.legal__gap{height:0}
+.legal__cats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .legal__upd{color:var(--dim);font:12.5px var(--mono);margin-bottom:48px}
 .legal h2{font:300 clamp(26px,2.8vw,38px)/1.05 var(--display);letter-spacing:-.03em;margin:56px 0 14px;padding-top:18px;border-top:1px solid var(--line)}
 .legal h3{font:500 16px/1.4 var(--text);margin:26px 0 6px}

@@ -38,6 +38,9 @@ export default function Footer({ fecha, categorias = ORDEN_CATEGORIAS }) {
           <h2>Compra segura</h2>
           <ul>
             <li><Link href="/#como-compras">Cómo compras</Link></li>
+            <li><Link href="/nosotros">Quiénes somos</Link></li>
+            <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
+            <li><Link href="/medellin">Entregas en Medellín</Link></li>
             <li><Link href="/envios">Envíos</Link></li>
             <li><Link href="/garantia">Garantía</Link></li>
             <li><Link href="/cambios-y-retracto">Cambios y retracto</Link></li>
