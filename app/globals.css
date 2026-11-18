@@ -397,6 +397,7 @@ a{color:inherit}
 .addp__btns{grid-column:1/-1}
 .edp{margin-bottom:14px}
 .edp__t{grid-column:1/-1;font-size:15px;font-weight:600;color:#000}
+.edp__nota{grid-column:1/-1;font-size:13px;color:#b00020}
 .edp__btns{display:flex;gap:10px;flex-wrap:wrap}
 .btn.edp__del{margin-left:auto;color:#b00020;border-color:#b00020}
 .photos li.is-on{background:#f4f4f4}

@@ -68,6 +68,8 @@ export default function AdminPanel() {
           </label>
           <label>Proveedor<input name="proveedor" list="dlProv" /></label>
           <label>Ref. del proveedor<input name="ref" placeholder="Así aparece en el PDF" /></label>
+          <label>Precio de venta fijo<input name="venta" inputMode="numeric" placeholder="Vacío = costo + margen" /></label>
+          <p className="edp__nota" id="edpFijoNota" hidden>Para poner precio fijo, primero corre <span className="mono">supabase/04-precio-fijo.sql</span> en Supabase.</p>
           <label>Cambiar foto<input name="foto" type="file" accept="image/*" /></label>
           <p className="addp__prev" id="edpPrev" />
           <div className="addp__btns edp__btns">
@@ -118,7 +120,7 @@ export default function AdminPanel() {
         <label className="admin__round"><input type="checkbox" id="round" /> Redondear precios a …900 (ej. 862.500 → 869.900)</label>
 
         <h2>Lista de productos</h2>
-        <p>Una línea por producto: <span className="mono">categoría;marca;nombre;costo;estado;proveedor;ref</span>. Costo en pesos sin puntos (0 = «Consultar»). Estados: disponible, transito, destacado u oculto. La última columna (ref) es como aparece el producto en el PDF del proveedor: no la cambies, con ella se cruzan las listas nuevas.</p>
+        <p>Una línea por producto: <span className="mono">categoría;marca;nombre;costo;estado;proveedor;ref;venta</span>. Costo en pesos sin puntos (0 = «Consultar»). «venta» es opcional: si la pones, ese es el precio al público y se ignora el margen. Estados: disponible, transito, destacado u oculto. La última columna (ref) es como aparece el producto en el PDF del proveedor: no la cambies, con ella se cruzan las listas nuevas.</p>
         <textarea id="adminList" spellCheck="false" aria-label="Lista de productos" />
         <div className="admin__btns">
           <button className="btn btn--ghost btn--sm" id="aDiff">Revisar cambios</button>
