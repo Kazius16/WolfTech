@@ -27,7 +27,7 @@ export default function Catalogo({ categoria = null }) {
     const palabras = sinTildes(q.toLowerCase()).split(/\s+/).filter(Boolean);
     const r = base.filter((p) => (cat === 'Todo' || p.categoria === cat)
       && palabras.every((w) => sinTildes(`${p.marca} ${p.nombre} ${p.categoria} ${lineaSpecs(p)}`.toLowerCase()).includes(w)));
-    const val = (p) => p.precio ?? Infinity;
+    const val = (p) => p.precio ?? 1e12; // sin precio al final (Infinity - Infinity da NaN y desordena)
     if (orden === 'asc') r.sort((a, b) => val(a) - val(b));
     else if (orden === 'desc') r.sort((a, b) => (b.precio ?? -1) - (a.precio ?? -1));
     else r.sort((a, b) => ORDEN_CATEGORIAS.indexOf(a.categoria) - ORDEN_CATEGORIAS.indexOf(b.categoria) || val(a) - val(b));

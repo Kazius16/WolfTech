@@ -26,7 +26,7 @@ export async function GET() {
       <g:title>${xml(`${p.marca} ${p.nombre}`.slice(0, 150))}</g:title>
       <g:description>${xml(descripcion(p).slice(0, 5000))}</g:description>
       <g:link>${SITIO}/producto/${xml(p.id)}</g:link>
-      <g:image_link>${xml(p.foto)}</g:image_link>
+      <g:image_link>${xml(p.foto.startsWith('/') ? SITIO + p.foto : p.foto)}</g:image_link>
       <g:availability>in_stock</g:availability>
       <g:price>${p.precio}.00 COP</g:price>
       <g:condition>new</g:condition>

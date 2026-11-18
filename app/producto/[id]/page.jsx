@@ -54,7 +54,7 @@ export default async function Producto({ params }) {
       {
         '@type': 'Product', '@id': url + '#producto', name: `${p.marca} ${p.nombre}`, sku: p.id, category: p.categoria,
         brand: { '@type': 'Brand', name: p.marca },
-        image: p.foto ? [p.foto] : [SITIO + '/og.jpg'],
+        image: p.foto ? [p.foto.startsWith('/') ? SITIO + p.foto : p.foto] : [SITIO + '/og.jpg'],
         description: `${p.marca} ${p.nombre}. ${lineaSpecs(p)}`.trim(),
         ...(p.precio ? {
           offers: {
