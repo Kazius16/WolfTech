@@ -43,6 +43,41 @@ export default function AdminPanel() {
         </label>
         <div id="impOut" />
 
+        <h2>Editar producto</h2>
+        <p>Busca cualquier producto y toca «Editar» para cambiarle el nombre, el costo, el estado, la categoría o la foto. También puedes ocultarlo o borrarlo.</p>
+        <div className="photos__tools">
+          <input id="edQ" type="search" placeholder="Buscar: G203, 9800X3D, Cyborg…" aria-label="Buscar producto para editar" />
+          <select id="edF" aria-label="Filtrar por estado" defaultValue="todos">
+            <option value="todos">Todos</option><option value="disponible">Disponibles</option><option value="destacado">Destacados</option>
+            <option value="transito">En tránsito</option><option value="oculto">Ocultos</option>
+          </select>
+        </div>
+        <form className="addp edp" id="edp" autoComplete="off" hidden>
+          <p className="edp__t" id="edpT" />
+          <label>Categoría<select name="categoria" required /></label>
+          <label>Marca<input name="marca" list="dlMarcas" required /></label>
+          <label className="w2">Nombre del producto<input name="nombre" required /></label>
+          <label>Costo del proveedor<input name="costo" inputMode="numeric" placeholder="0 = consultar" /></label>
+          <label>Estado
+            <select name="estado">
+              <option value="disponible">Disponible</option>
+              <option value="destacado">Destacado</option>
+              <option value="transito">En tránsito (consultar)</option>
+              <option value="oculto">Oculto</option>
+            </select>
+          </label>
+          <label>Proveedor<input name="proveedor" list="dlProv" /></label>
+          <label>Ref. del proveedor<input name="ref" placeholder="Así aparece en el PDF" /></label>
+          <label>Cambiar foto<input name="foto" type="file" accept="image/*" /></label>
+          <p className="addp__prev" id="edpPrev" />
+          <div className="addp__btns edp__btns">
+            <button className="btn btn--solid btn--sm" type="submit">Guardar cambios</button>
+            <button className="btn btn--ghost btn--sm" type="button" id="edpNo">Cancelar</button>
+            <button className="btn btn--ghost btn--sm edp__del" type="button" id="edpDel">Borrar producto</button>
+          </div>
+        </form>
+        <ul className="photos" id="edList" />
+
         <h2>Agregar producto</h2>
         <p>Para productos que no vienen en los PDF o que quieres montar ya. Quedan en la lista igual que los demás.</p>
         <form className="addp" id="addp" autoComplete="off">
