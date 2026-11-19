@@ -141,6 +141,20 @@ export default function AdminPanel() {
         <div className="margins" id="margins" />
         <label className="admin__round"><input type="checkbox" id="round" /> Redondear precios a …900 (ej. 862.500 → 869.900)</label>
 
+        <h3 className="admin__h3">Margen según el costo (escala)</h3>
+        <p>Para ganar bien en todo: a lo barato se le pone más % (un mouse de $68.000 aguanta 28 %) y a lo caro menos (un portátil de $4 millones solo aguanta 8–10 %). Aplica a las categorías que <b>no</b> tengan margen propio arriba. El precio fijo de un producto siempre gana.</p>
+        <label className="admin__round"><input type="checkbox" id="escOn" /> Usar escala de margen según el costo</label>
+        <div className="escala" id="escala" hidden>
+          <table>
+            <thead><tr><th>Costo del proveedor hasta</th><th>Margen</th><th>Ejemplo real</th></tr></thead>
+            <tbody id="escRows" />
+          </table>
+          <label className="escala__min">Ganancia mínima por producto<input id="escMin" inputMode="numeric" placeholder="10000" /></label>
+          <p className="escala__ayuda">La ganancia mínima no aplica a productos de menos de $20.000 de costo (rollos, etiquetas, cables).</p>
+          <p className="edp__nota" id="escNota" />
+          <button className="btn btn--ghost btn--sm" type="button" id="escReset">Usar la escala sugerida</button>
+        </div>
+
         <h2>Lista de productos</h2>
         <p>Una línea por producto: <span className="mono">categoría;marca;nombre;costo;estado;proveedor;ref;venta</span>. Costo en pesos sin puntos (0 = «Consultar»). «venta» es opcional: si la pones, ese es el precio al público y se ignora el margen. Estados: disponible, transito, destacado u oculto. La última columna (ref) es como aparece el producto en el PDF del proveedor: no la cambies, con ella se cruzan las listas nuevas.</p>
         <textarea id="adminList" spellCheck="false" aria-label="Lista de productos" />
