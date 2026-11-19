@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { montarAdmin } from '@/lib/admin';
 import { useTienda } from './Tienda';
+import { RECARGO_LINK } from '@/lib/config';
 
 export default function AdminPanel() {
   const root = useRef(null);
@@ -49,6 +50,7 @@ export default function AdminPanel() {
           <datalist id="dlCobro" />
           <ul className="cobro__items" id="cobroItems" />
           <label>Envío / domicilio<input name="envio" inputMode="numeric" placeholder="0" /></label>
+          <label className="cobro__rec w2"><input type="checkbox" id="cobroRecargo" defaultChecked /> Sumar {RECARGO_LINK} % por pago con link (lo que cobra Bold)</label>
           <label className="w2">Nota (opcional)<input name="nota" placeholder="Dirección, color, lo que sea" /></label>
           <p className="addp__prev" id="cobroTotal" />
           <div className="addp__btns"><button className="btn btn--solid btn--sm" type="submit">Crear link de pago</button></div>

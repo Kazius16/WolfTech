@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Legal from '@/components/Legal';
 import JsonLd from '@/components/JsonLd';
-import { SITIO } from '@/lib/config';
+import { SITIO, RECARGO_LINK } from '@/lib/config';
 
 export const metadata = {
   title: 'Preguntas frecuentes',
@@ -31,8 +31,10 @@ const PREGUNTAS = [
   ['¿Cómo sé si las piezas de mi PC son compatibles?',
     'Usa el armador de la página: revisa el socket del procesador y la board, el tipo de memoria RAM y si la fuente alcanza para la tarjeta de video. Si tienes dudas, te asesoramos por WhatsApp sin costo.',
     <>Usa el <Link href="/#armador">armador</Link>: revisa el socket del procesador y la board, el tipo de memoria RAM y si la fuente alcanza para la tarjeta de video. Si tienes dudas, te asesoramos por WhatsApp sin costo.</>],
+  ['¿Cómo puedo pagar?',
+    `Por transferencia bancaria, Bre-B o Nequi a nuestra cuenta, sin recargo. También con tarjeta de crédito o débito, PSE o Nequi por link de pago seguro (Bold); en ese caso se suma un ${RECARGO_LINK} % por el costo de la plataforma de pago, y siempre te lo decimos antes de enviarte el link. Con tarjeta de crédito puedes diferir a cuotas.`],
   ['¿Los precios incluyen todo?',
-    'El precio publicado es el precio del producto. El envío o domicilio se cobra aparte y te lo decimos antes de pagar. Como los distribuidores cambian precios seguido, siempre confirmamos el valor final por WhatsApp antes de cobrarte.'],
+    `El precio publicado es el precio del producto. El envío o domicilio se cobra aparte y te lo decimos antes de pagar. Si pagas por link de pago se suma un ${RECARGO_LINK} %; por transferencia no. Como los distribuidores cambian precios seguido, siempre confirmamos el valor final por WhatsApp antes de cobrarte.`],
 ];
 
 export default function Faq() {

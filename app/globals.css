@@ -579,3 +579,6 @@ body:has(.sum__bar.is-on) .wa-flot{bottom:84px}
 .mer .up { color: #2E8CFF; }
 .escala--mer details summary { cursor: pointer; margin-top: 12px; }
 @media (max-width: 640px) { .mer li { flex-direction: column; gap: 2px; } }
+
+/* casilla del recargo por pago con link */
+.cobro__rec{display:flex;align-items:center;gap:10px;flex-direction:row!important;color:inherit}.cobro__rec input{width:auto!important;min-width:0}
