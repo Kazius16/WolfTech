@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-19",
+ "semana": "2026-11-19",
+ "cuenta": {
+  "omitido": 1
+ },
+ "resultado": [
+  {
+   "id": "prueba-llave",
+   "ahora": null,
+   "antes": null,
+   "accion": "omitido: no existe",
+   "mercado": 1
+  }
+ ]
+}
