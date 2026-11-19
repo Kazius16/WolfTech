@@ -1,0 +1,24 @@
+# Foto semanal de precios: guarda los precios públicos en reportes/precios/ultimo.json
+# para la revisión semanal contra Alkosto, Ktronix, Falabella y Mercado Libre.
+name: Precios semanal
+on:
+  schedule:
+    - cron: '30 23 * * 0'   # domingos 6:30 p. m. hora Colombia
+  workflow_dispatch: {}      # también se puede correr a mano desde GitHub → Actions
+permissions:
+  contents: write
+jobs:
+  foto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/foto-precios.mjs
+      - name: Guardar si cambió
+        run: |
+          git config user.name "wolftech-bot"
+          git config user.email "wolftech-bot@users.noreply.github.com"
+          git add reportes/precios/ultimo.json
+          git diff --cached --quiet && echo "Sin cambios" || (git commit -m "Precios semanal $(date +%F) [skip ci]" && git push)
