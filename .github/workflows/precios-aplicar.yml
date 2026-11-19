@@ -1,0 +1,30 @@
+# Aplica los precios de mercado que deja la revisión semanal en reportes/precios/mercado.json.
+# La base de datos (supabase/07-precio-mercado.sql) pone el precio un poco debajo del más
+# barato y nunca por debajo del piso de ganancia. Necesita el secreto PRECIOS_LLAVE.
+name: Precios aplicar
+on:
+  push:
+    branches: [main]
+    paths: ['reportes/precios/mercado.json']
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: precios
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/aplicar-precios.mjs
+        env:
+          PRECIOS_LLAVE: ${{ secrets.PRECIOS_LLAVE }}
+      - name: Guardar resultado y foto nueva de precios
+        run: |
+          node scripts/foto-precios.mjs
+          git config user.name "wolftech-bot"
+          git config user.email "wolftech-bot@users.noreply.github.com"
+          git add reportes/precios/aplicado.json reportes/precios/ultimo.json
+          git diff --cached --quiet && echo "Sin cambios" || (git commit -m "Precios de mercado aplicados $(date +%F) [skip ci]" && git pull --rebase && git push)

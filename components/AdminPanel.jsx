@@ -155,6 +155,15 @@ export default function AdminPanel() {
           <button className="btn btn--ghost btn--sm" type="button" id="escReset">Usar la escala sugerida</button>
         </div>
 
+        <h3 className="admin__h3">Precio de mercado (robot del domingo)</h3>
+        <p>Cada domingo el robot busca el precio más barato del mismo producto en Alkosto, Ktronix, Falabella, Éxito y Mercado Libre y nos deja un poco por debajo. Nunca baja del piso de ganancia sobre tu costo: si no se puede competir, deja el precio normal y te avisa. Si el proveedor sube el costo y el precio del robot ya no deja el piso, se vuelve solo al margen normal. Tu precio fijo siempre gana.</p>
+        <div className="escala escala--mer">
+          <label className="escala__min">Quedar por debajo del más barato<input id="merDesc" type="number" min="0" max="20" step="0.5" />%</label>
+          <label className="escala__min">Piso: ganar mínimo sobre el costo<input id="merPiso" type="number" min="5" max="60" step="0.5" />%</label>
+          <p className="escala__ayuda">También respeta la ganancia mínima por producto de arriba. Los porcentajes se guardan con «Guardar y publicar».</p>
+          <details><summary id="merT">Últimos cambios del robot</summary><ul className="mer" id="merLista" /></details>
+        </div>
+
         <h2>Lista de productos</h2>
         <p>Una línea por producto: <span className="mono">categoría;marca;nombre;costo;estado;proveedor;ref;venta</span>. Costo en pesos sin puntos (0 = «Consultar»). «venta» es opcional: si la pones, ese es el precio al público y se ignora el margen. Estados: disponible, transito, destacado u oculto. La última columna (ref) es como aparece el producto en el PDF del proveedor: no la cambies, con ella se cruzan las listas nuevas.</p>
         <textarea id="adminList" spellCheck="false" aria-label="Lista de productos" />
