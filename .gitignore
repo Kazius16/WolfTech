@@ -5,3 +5,9 @@ out/
 .vercel
 *.log
 .DS_Store
+
+# videos: tomas crudas y archivos de trabajo del editor
+videos-crudos/
+_trabajo/
+marketing/**/salida/
+__pycache__/

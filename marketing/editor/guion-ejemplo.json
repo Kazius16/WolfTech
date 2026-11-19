@@ -1,0 +1,31 @@
+{
+  "nombre": "parte-por-parte-01",
+  "velocidad": 1.08,
+  "subtitulos": true,
+  "clips": [
+    {"archivo": "IMG_2461.MOV", "nombre": "gancho"},
+    {"archivo": "IMG_2466.MOV", "nombre": "intro", "destello": true},
+    {"archivo": "IMG_2470.MOV", "nombre": "monitor", "destello": true},
+    {"archivo": "IMG_2472.MOV", "nombre": "fuente", "destello": true},
+    {"archivo": "IMG_2474.MOV", "nombre": "chasis", "destello": true},
+    {"archivo": "IMG_2477.MOV", "nombre": "cta", "destello": true, "cola": 0.9}
+  ],
+  "graficos": [
+    {"tipo": "titulo", "kicker": "PARTE POR PARTE · 01", "texto": "Tarjeta\ngráfica", "cuando": 0, "hasta": {"seccion": "intro"}},
+    {"tipo": "chip", "texto": "La pieza que más\ndefine tus *FPS*.", "cuando": {"clip": "intro", "palabra": "define"}},
+    {"tipo": "seccion", "texto": "01 · TU MONITOR", "cuando": {"seccion": "monitor"}},
+    {"tipo": "fila", "fila": 0, "texto": "1080p", "detalle": "→ 8 GB", "cuando": {"clip": "monitor", "palabra": "1080p"}},
+    {"tipo": "fila", "fila": 1, "texto": "1440p o más", "detalle": "→ 12 GB+", "cuando": {"clip": "monitor", "palabra": "1440p"}},
+    {"tipo": "seccion", "texto": "02 · LA FUENTE", "cuando": {"seccion": "fuente"}},
+    {"tipo": "medidor", "titulo": "Potencia mínima de la fuente", "max": 800, "cuando": {"clip": "fuente", "palabra": "cada tarjeta"},
+     "marcas": [{"valor": 550, "texto": "RTX 5060 → 550 W", "cuando": {"clip": "fuente", "palabra": "5060"}},
+                {"valor": 650, "texto": "RTX 5070 → 650 W", "cuando": {"clip": "fuente", "palabra": "5070"}}]},
+    {"tipo": "nota", "y": 1600, "texto": "Si no da, *se apaga jugando.*", "cuando": {"clip": "fuente", "palabra": "se apaga"}},
+    {"tipo": "seccion", "texto": "03 · QUE QUEPA", "cuando": {"seccion": "chasis"}},
+    {"tipo": "chip", "y": 1320, "texto": "Mide tu\n*chasis.*", "cuando": {"clip": "chasis", "palabra": "mide"}},
+    {"tipo": "chip", "y": 1260, "texto": "¿Cuál le va\na tu PC?", "cuando": {"seccion": "cta"}},
+    {"tipo": "nota", "y": 1470, "texto": "Escríbenos y te decimos.", "cuando": {"clip": "cta", "palabra": "escríbenos"}},
+    {"tipo": "nota", "y": 1555, "texto": "*GUÁRDALO PARA CUANDO VAYAS A COMPRAR*", "cuando": {"clip": "cta", "palabra": "escríbenos", "mas": 1.5}}
+  ],
+  "cierre": {"frase": "Arma la correcta.", "duracion": 2.8}
+}

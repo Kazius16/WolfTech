@@ -1,0 +1,8 @@
+{
+  "name": "wolftech-editor",
+  "private": true,
+  "description": "Editor de videos WolfTech: dibuja la capa de gráficos con Playwright",
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

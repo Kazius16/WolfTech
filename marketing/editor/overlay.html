@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Capa de gráficos del editor WolfTech. Fondo transparente: se dibuja encima del video.
+     Lee plan.json (lo escribe editar.py) y expone render(t). Tipos de gráfico:
+     titulo · seccion · chip · fila · medidor · nota  + subtítulos, destellos y cierre con el lobo.
+     En los textos, *palabra* sale en azul. -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:'Inter Display','Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'DejaVu Sans Mono','Consolas',monospace;letter-spacing:.14em}
+  .abs{position:absolute}
+  .az{color:#2E8CFF}
+  #tope{position:absolute;left:0;right:0;top:0;height:640px;background:linear-gradient(to bottom,rgba(0,0,0,.75),rgba(0,0,0,0));opacity:0}
+  #plato{position:absolute;left:0;right:0;bottom:0;height:900px;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.6) 45%,rgba(0,0,0,0));opacity:0}
+  .titulo{left:40px;right:40px;top:300px;text-align:center;font-weight:900;font-size:150px;line-height:.9;letter-spacing:-.035em;text-transform:uppercase}
+  .kicker{left:0;right:0;top:250px;text-align:center;font-size:30px;color:#2E8CFF}
+  .seccion{left:90px;top:1250px;font-size:30px;color:#2E8CFF}
+  .chip{left:90px;right:60px;top:1300px;font-weight:900;font-size:70px;letter-spacing:-.03em;line-height:.95;text-transform:uppercase}
+  .fila{left:90px;font-weight:800;font-size:76px;letter-spacing:-.03em;white-space:nowrap}
+  .fila small{font-weight:300;color:#cfcfcf;font-size:44px;letter-spacing:-.01em;margin-left:14px}
+  .nota{left:90px;right:60px;font-size:44px;font-weight:600;letter-spacing:-.01em}
+  #subs{position:absolute;left:60px;right:60px;top:1000px;text-align:center;font-weight:800;font-size:60px;letter-spacing:-.02em;line-height:1.05;text-shadow:0 3px 18px rgba(0,0,0,.85),0 0 4px rgba(0,0,0,.9)}
+  #subs span{transition:none}
+  #cierre{position:absolute;inset:0;background:#000;opacity:0}
+  #logo{position:absolute;left:390px;top:560px;width:300px}
+  canvas{position:absolute;left:0;top:0}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head><body>
+<div id="tope"></div><div id="plato"></div>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<div id="capa"></div>
+<div id="subs"></div>
+<div id="cierre">
+  <img id="logo" src="logo.svg" alt="">
+  <p class="abs" id="c1" style="left:0;right:0;top:960px;text-align:center;font-weight:200;font-size:120px;letter-spacing:-.05em"></p>
+  <div class="abs" id="c2" style="left:0;right:0;top:1180px;text-align:center"><span style="display:inline-block;border:2px solid #fff;border-radius:999px;padding:22px 44px;font-size:40px;font-weight:500">wolftech.com.co</span></div>
+  <p class="abs mono" id="c3" style="left:0;right:0;top:1330px;text-align:center;font-size:30px;color:#cfcfcf"></p>
+</div>
+<div id="flash"></div>
+<script>
+const AZUL = '#2E8CFF';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = (x) => 1 - Math.pow(1 - clamp(x), 4);
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const acento = (s) => String(s).replace(/\*([^*]+)\*/g, '<span class="az">$1</span>').replace(/\n/g, '<br>');
+let PLAN, ITEMS = [];
+
+async function cargar() {
+  PLAN = await (await fetch('plan.json')).json();
+  const capa = document.getElementById('capa');
+  for (const it of PLAN.items) {
+    const d = document.createElement('div');
+    if (it.tipo === 'titulo') {
+      d.innerHTML = `<p class="abs mono kicker">${acento(it.kicker || '')}</p><p class="abs titulo">${acento(it.texto)}</p>`;
+    } else if (it.tipo === 'seccion') {
+      d.className = 'abs mono seccion'; d.innerHTML = acento(it.texto);
+    } else if (it.tipo === 'chip') {
+      d.className = 'abs chip'; d.innerHTML = acento(it.texto);
+      if (it.y) d.style.top = it.y + 'px';
+    } else if (it.tipo === 'fila') {
+      d.className = 'abs fila'; d.style.top = (1320 + 110 * (it.fila || 0)) + 'px';
+      d.innerHTML = `${acento(it.texto)}${it.detalle ? ` <small>${acento(it.detalle)}</small>` : ''}`;
+    } else if (it.tipo === 'nota') {
+      d.className = 'abs nota'; d.style.top = (it.y || 1600) + 'px'; d.innerHTML = acento(it.texto);
+    }
+    capa.appendChild(d); ITEMS.push({ it, d });
+  }
+  document.getElementById('c1').textContent = PLAN.cierre.frase;
+  document.getElementById('c3').textContent = PLAN.cierre.linea;
+  await document.fonts.ready;
+}
+
+function render(t) {
+  const FIN = PLAN.fin_video;
+  const cv = document.getElementById('cv').getContext('2d');
+  cv.clearRect(0, 0, 1080, 1920);
+  let abajo = 0, arriba = 0;
+  for (const { it, d } of ITEMS) {
+    const on = t >= it.t0 && t < it.t1;
+    const k = it.t0 <= 0.05 ? 1 : ease((t - it.t0) / 0.28);
+    const out = 1 - prog(t, it.t1 - 0.15, it.t1);
+    const op = on ? k * out : 0;
+    if (it.tipo === 'titulo') {
+      d.style.opacity = op; arriba = Math.max(arriba, op);
+      const s = 1.12 - 0.12 * ease((t - it.t0) / 0.35);
+      d.lastChild.style.transform = `scale(${s})`;
+      continue;
+    }
+    if (it.tipo === 'medidor') { if (on) medidor(cv, it, t, op); if (on) abajo = Math.max(abajo, op); continue; }
+    d.style.opacity = op;
+    d.style.transform = `translateY(${(1 - k) * 26}px)`;
+    d.style.filter = `blur(${(1 - k) * 10}px)`;
+    if (on) abajo = Math.max(abajo, op);
+  }
+  document.getElementById('tope').style.opacity = arriba;
+  document.getElementById('plato').style.opacity = abajo;
+  subtitulos(t, FIN);
+  let fl = 0;
+  for (const x of PLAN.destellos.concat([FIN])) if (t >= x && t < x + 0.1) fl = Math.max(fl, 1 - (t - x) / 0.1);
+  document.getElementById('flash').style.opacity = fl * 0.6;
+  cierre(t, FIN);
+}
+
+function medidor(cv, it, t, op) {
+  const X = 90, Y = it.y || 1400, Wd = 900, Hh = 26, max = it.max || 800, x = (w) => X + Wd * w / max;
+  cv.save(); cv.globalAlpha = op;
+  cv.fillStyle = '#8f8f8f'; cv.font = '22px "DejaVu Sans Mono"'; cv.textAlign = 'left';
+  cv.fillText((it.titulo || '').toUpperCase(), X, Y - 26);
+  cv.fillStyle = 'rgba(255,255,255,.12)'; cv.fillRect(X, Y, Wd, Hh);
+  let lleno = 0, prev = 0;
+  (it.marcas || []).forEach((m) => { if (t >= m.t) { lleno = prev + (m.valor - prev) * ease((t - m.t) / 0.5); prev = m.valor; } });
+  cv.save(); cv.shadowColor = AZUL; cv.shadowBlur = 22; cv.fillStyle = AZUL; cv.fillRect(X, Y, x(lleno) - X, Hh); cv.restore();
+  (it.marcas || []).forEach((m, i) => {
+    if (t < m.t) return;
+    const q = ease((t - m.t) / 0.3); cv.globalAlpha = op * q;
+    cv.strokeStyle = '#fff'; cv.lineWidth = 3; cv.beginPath(); cv.moveTo(x(m.valor), Y - 14); cv.lineTo(x(m.valor), Y + Hh + 8); cv.stroke();
+    cv.fillStyle = '#fff'; cv.font = '600 44px "Inter Display"'; cv.fillText(m.texto, X, Y + Hh + 50 + i * 45);
+  });
+  cv.restore();
+}
+
+function subtitulos(t, FIN) {
+  const el = document.getElementById('subs');
+  if (t >= FIN) { el.innerHTML = ''; return; }
+  const g = PLAN.subs.find((g) => t >= g[0].a - 0.05 && t < g[g.length - 1].b + 0.12);
+  if (!g) { el.innerHTML = ''; return; }
+  el.innerHTML = g.map((w) => `<span${t >= w.a && t < w.b + 0.05 ? ' class="az"' : ''}>${w.w}</span>`).join(' ');
+}
+
+function cierre(t, FIN) {
+  const cz = document.getElementById('cierre');
+  cz.style.opacity = t >= FIN ? 1 : 0;
+  if (t < FIN) return;
+  const lt = t - FIN, k = ease(lt / 0.8), lg = document.getElementById('logo');
+  lg.style.clipPath = `inset(${(1 - k) * 100}% 0 0 0)`;
+  lg.style.filter = 'drop-shadow(0 0 14px rgba(46,140,255,.85)) drop-shadow(0 0 42px rgba(46,140,255,.5))';
+  ['c1', 'c2', 'c3'].forEach((id, j) => {
+    const q = ease(prog(lt, 0.35 + j * 0.18, 0.85 + j * 0.18)), d = document.getElementById(id);
+    d.style.opacity = q; d.style.transform = `translateY(${(1 - q) * 24}px)`;
+  });
+}
+
+window.listo = cargar();
+window.render = render;
+</script>
+</body></html>
