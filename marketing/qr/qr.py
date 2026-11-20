@@ -4,7 +4,7 @@ El logo se toma exacto de marketing/videos/logo.svg (nunca se redibuja)."""
 import re, sys, segno, cairosvg
 from pathlib import Path
 
-URL = sys.argv[1] if len(sys.argv) > 1 else 'https://linktr.ee/wolftech.com.co'
+URL = sys.argv[1] if len(sys.argv) > 1 else 'https://linktr.ee/wolftech.co'
 AZUL, TINTA = '#2E8CFF', '#0A0A0A'
 qr = segno.make(URL, error='h', boost_error=False)
 M = [list(r) for r in qr.matrix]
