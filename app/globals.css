@@ -582,3 +582,44 @@ body:has(.sum__bar.is-on) .wa-flot{bottom:84px}
 
 /* casilla del recargo por pago con link */
 .cobro__rec{display:flex;align-items:center;gap:10px;flex-direction:row!important;color:inherit}.cobro__rec input{width:auto!important;min-width:0}
+
+/* ============================================================
+   COLOR DE MARCA — el azul #2E8CFF como acento (≈10 % de la página)
+   Precios, botón principal, etiquetas y fondos azul noche en
+   el armador y el pie. Sin degradados de colores ni neón.
+   ============================================================ */
+:root{
+  --azul:#2E8CFF;            /* acento de marca */
+  --azul-tenue:#7FAEE6;      /* textos pequeños en azul (marca · categoría) */
+  --azul-velo:rgba(46,140,255,.14);
+  --noche:#050D1A;           /* fondo azul muy oscuro para cambiar de ritmo */
+}
+::selection{background:var(--azul);color:#fff}
+:focus-visible{outline-color:var(--azul)}
+
+/* botón principal */
+.btn--solid{background:var(--azul);border-color:var(--azul);color:#fff}
+.btn--solid:hover{background:transparent;color:#fff;border-color:var(--azul)}
+.ico.is-in{background:var(--azul);border-color:var(--azul);color:#fff}
+.nav__cart b{color:var(--azul)}
+
+/* precios */
+.tile__price,.pd__price,.mini__p,.opt__p,.line__p{color:var(--azul)}
+.tile__price.ask{color:var(--mute)}
+
+/* etiquetas */
+.tile__brand{color:var(--azul-tenue)}
+.frame__badge{background:var(--azul);color:#fff}
+.tabs button sup{color:var(--azul-tenue)}
+.tabs button[aria-pressed=true]::after{background:var(--azul);height:2px}
+.search:focus{border-color:var(--azul)}
+.step.is-set .step__n,.how__n{color:var(--azul)}
+.step__head:hover .step__go{border-color:var(--azul)}
+
+/* resplandor suave desde abajo en las fotos y detrás del lobo */
+.frame{background:radial-gradient(110% 65% at 50% 115%,var(--azul-velo),transparent 62%),var(--panel)}
+.hero{background:radial-gradient(55% 42% at 50% 38%,rgba(46,140,255,.10),transparent 72%),#000}
+
+/* secciones en azul noche */
+.build,.foot{background:var(--noche);border-top-color:rgba(46,140,255,.18)}
+.build .step,.build .step:last-child{border-color:rgba(46,140,255,.16)}
