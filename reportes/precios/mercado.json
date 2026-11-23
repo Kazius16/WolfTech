@@ -1,1 +1,125 @@
-{"fecha": "2026-11-19", "nota": "Prueba de la llave del robot: producto inexistente, no cambia precios.", "productos": [{"id": "prueba-llave", "nombre": "Prueba", "nuestro": 0, "mercado": 1, "ref": "prueba"}]}
+{
+ "fecha": "2026-11-22",
+ "productos": [
+  {
+   "id": "kingston-nv3-1tb-6000mb-s-gen4",
+   "nombre": "Kingston NV3 1TB 6000MB/s GEN4",
+   "nuestro": 719900,
+   "mercado": 629900,
+   "ref": "Falabella (All For All) $629.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/152249982/disco-solido-sdd-m-2-1tb-kingston-pcie-4-0-nv3-color-azul"
+  },
+  {
+   "id": "logitech-volante-timon-g29-ps3-ps4-ps5-pc",
+   "nombre": "Logitech Volante Timón G29 PS3 PS4 PS5 PC",
+   "nuestro": 1009900,
+   "mercado": 1129900,
+   "ref": "Falabella $1.129.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/43700758/Timon-Logitech-G-G29-PlayStation-PC/43700758"
+  },
+  {
+   "id": "logitech-volante-timon-g923-trueforce-ps4-ps5-pc",
+   "nombre": "Logitech Volante Timón G923 Trueforce PS4 PS5 PC",
+   "nuestro": 1199900,
+   "mercado": 1269900,
+   "ref": "Falabella $1.269.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/22271821/Timon-Logitech-G923-para-PlayStation-y-PC/22271821"
+  },
+  {
+   "id": "logitech-mouse-gamer-usb-g502-hero",
+   "nombre": "Logitech Mouse Gamer USB G502 Hero",
+   "nuestro": 239900,
+   "mercado": 224900,
+   "ref": "Falabella (JD Market) $224.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/118344815/Mouse-Gamer-Logitech-G502-HERO-Programable-RGB-16000dpi"
+  },
+  {
+   "id": "logitech-mouse-inalambrico-g305",
+   "nombre": "Logitech Mouse Inalámbrico G305",
+   "nuestro": 169900,
+   "mercado": 155900,
+   "ref": "Falabella (29 Com) $155.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/153295526/mouse-gamer-inalambrico-logitech-g305-lightspeed-12000dpi-negro/153295527"
+  },
+  {
+   "id": "logitech-mouse-mx-master-3s",
+   "nombre": "Logitech Mouse MX Master 3S",
+   "nuestro": 569900,
+   "mercado": 499900,
+   "ref": "Alkosto $499.900",
+   "url": "https://www.alkosto.com/mouse-logitech-mx-master-3s-inalambrico-bluetooth/p/097855201836"
+  },
+  {
+   "id": "lg-monitor-27u411b-b-27-full-hd-144-hz",
+   "nombre": "LG Monitor 27U411B-B 27\" Full HD 144 Hz",
+   "nuestro": 499900,
+   "mercado": 499900,
+   "ref": "Alkosto $499.900",
+   "url": "https://www.alkosto.com/monitor-lg-27-pulgadas-27u411b-fhd-plano-negro/p/8806096833681"
+  },
+  {
+   "id": "lenovo-legion-ryzen-9-9955hx3d-rtx-5080-16gb-32gb-ddr5-1tb-16-oled-240hz",
+   "nombre": "Lenovo Legion · Ryzen 9 9955HX3D · RTX 5080 16GB · 32GB DDR5 · 1TB · 16\" OLED 240Hz",
+   "nuestro": 15799900,
+   "mercado": 18999070,
+   "ref": "Alkosto $18.999.070",
+   "url": "https://www.alkosto.com/computador-portatil-gamer-lenovo-legion-7-pro-16-amd-r9/p/199272949602"
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c200",
+   "nombre": "TP-Link Cámara IP Tapo C200",
+   "nuestro": 92900,
+   "mercado": 99900,
+   "ref": "Ktronix $99.900",
+   "url": "https://www.ktronix.com/camara-tapo-c200-1080p-panoramica-til/p/845973088095"
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c210-2k",
+   "nombre": "TP-Link Cámara IP Tapo C210 2K",
+   "nuestro": 99900,
+   "mercado": 95900,
+   "ref": "Falabella (Tecnoplaza) $95.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/122852601/Tp-link-Tapo-C210-Camara-De-Seguridad-360%C2%BA-Wifi-2k-Dia-noche/122852603"
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c310-exterior-2k",
+   "nombre": "TP-Link Cámara IP Tapo C310 Exterior 2K",
+   "nuestro": 159900,
+   "mercado": 159900,
+   "ref": "Falabella (tecnomarket.ink) $159.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/125936555/Camara-Ip-Wifi-Exterior-Tp-link-Tapo-C310-Alarma-3mp-Audio"
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c500-exterior-360",
+   "nombre": "TP-Link Cámara IP Tapo C500 Exterior 360°",
+   "nuestro": 189900,
+   "mercado": 189900,
+   "ref": "Alkosto $189.900",
+   "url": "https://www.alkosto.com/camara-seguridad-exterior-tp-link-tapo-c500-vision-dia/p/840030705861"
+  },
+  {
+   "id": "tp-link-router-archer-c64-ac1200-4-antenas-dual-band-5-ghz-867mb",
+   "nombre": "TP-Link Router Archer C64 AC1200 4 Antenas Dual Band 5 GHz 867MB",
+   "nuestro": 129900,
+   "mercado": 139900,
+   "ref": "Alkosto $139.900",
+   "url": "https://www.alkosto.com/router-tp-link-wifi-5-4-antenas-doble-banda-ac1200-mbps/p/840030703218"
+  },
+  {
+   "id": "tp-link-router-wi-fi-malla-deco-e4-3-pack",
+   "nombre": "TP-Link Router Wi-Fi Malla Deco E4 3 Pack",
+   "nuestro": 409900,
+   "mercado": 399900,
+   "ref": "Alkosto $399.900",
+   "url": "https://www.alkosto.com/deco-t-plink-ac1200-e4-3-unidades/p/840030700170"
+  },
+  {
+   "id": "tp-link-router-ax12-ax1500-dual-band-wi-fi-6",
+   "nombre": "TP-Link Router AX12 AX1500 Dual Band WI-FI 6",
+   "nuestro": 159900,
+   "mercado": 136900,
+   "ref": "Falabella (Tecnoplaza) $136.900",
+   "url": "https://www.falabella.com.co/falabella-co/product/135498249/Router-Tp-link-Ax1500-Archer-Ax12-Gigabit-Wifi-6-Dual-Band"
+  }
+ ]
+}
