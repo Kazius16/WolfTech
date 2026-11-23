@@ -1,16 +1,117 @@
 {
- "fecha": "2026-11-19",
- "semana": "2026-11-19",
+ "fecha": "2026-11-23",
+ "semana": "2026-11-22",
  "cuenta": {
-  "omitido": 1
+  "no_compite": 4,
+  "sube": 4,
+  "baja": 6,
+  "igual": 1
  },
  "resultado": [
   {
-   "id": "prueba-llave",
-   "ahora": null,
-   "antes": null,
-   "accion": "omitido: no existe",
-   "mercado": 1
+   "id": "kingston-nv3-1tb-6000mb-s-gen4",
+   "ahora": 719900,
+   "antes": 719900,
+   "accion": "no_compite",
+   "mercado": 629900
+  },
+  {
+   "id": "logitech-volante-timon-g29-ps3-ps4-ps5-pc",
+   "ahora": 1089900,
+   "antes": 1009900,
+   "accion": "sube",
+   "mercado": 1129900
+  },
+  {
+   "id": "logitech-volante-timon-g923-trueforce-ps4-ps5-pc",
+   "ahora": 1229900,
+   "antes": 1199900,
+   "accion": "sube",
+   "mercado": 1269900
+  },
+  {
+   "id": "logitech-mouse-gamer-usb-g502-hero",
+   "ahora": 239900,
+   "antes": 239900,
+   "accion": "no_compite",
+   "mercado": 224900
+  },
+  {
+   "id": "logitech-mouse-inalambrico-g305",
+   "ahora": 149900,
+   "antes": 169900,
+   "accion": "baja",
+   "mercado": 155900
+  },
+  {
+   "id": "logitech-mouse-mx-master-3s",
+   "ahora": 569900,
+   "antes": 569900,
+   "accion": "no_compite",
+   "mercado": 499900
+  },
+  {
+   "id": "lg-monitor-27u411b-b-27-full-hd-144-hz",
+   "ahora": 479900,
+   "antes": 499900,
+   "accion": "baja",
+   "mercado": 499900
+  },
+  {
+   "id": "lenovo-legion-ryzen-9-9955hx3d-rtx-5080-16gb-32gb-ddr5-1tb-16-oled-240hz",
+   "ahora": 18419900,
+   "antes": 15799900,
+   "accion": "sube",
+   "mercado": 18999070
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c200",
+   "ahora": 96900,
+   "antes": 92900,
+   "accion": "sube",
+   "mercado": 99900
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c210-2k",
+   "ahora": 92900,
+   "antes": 99900,
+   "accion": "baja",
+   "mercado": 95900
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c310-exterior-2k",
+   "ahora": 149900,
+   "antes": 159900,
+   "accion": "baja",
+   "mercado": 159900
+  },
+  {
+   "id": "tp-link-camara-ip-tapo-c500-exterior-360",
+   "ahora": 179900,
+   "antes": 189900,
+   "accion": "baja",
+   "mercado": 189900
+  },
+  {
+   "id": "tp-link-router-archer-c64-ac1200-4-antenas-dual-band-5-ghz-867mb",
+   "ahora": 129900,
+   "antes": 129900,
+   "accion": "igual",
+   "mercado": 139900
+  },
+  {
+   "id": "tp-link-router-wi-fi-malla-deco-e4-3-pack",
+   "ahora": 379900,
+   "antes": 409900,
+   "accion": "baja",
+   "mercado": 399900
+  },
+  {
+   "id": "tp-link-router-ax12-ax1500-dual-band-wi-fi-6",
+   "ahora": 159900,
+   "antes": 159900,
+   "accion": "no_compite",
+   "mercado": 136900
   }
  ]
 }

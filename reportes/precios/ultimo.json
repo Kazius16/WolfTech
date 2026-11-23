@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-19",
+ "fecha": "2026-11-23",
  "nota": "Precios públicos de wolftech.com.co (sin costos). Lo usa la revisión semanal de precios.",
  "total": 593,
  "productos": [
@@ -1369,7 +1369,7 @@
    "marca": "Lenovo",
    "nombre": "Legion · Ryzen 9 9955HX3D · RTX 5080 16GB · 32GB DDR5 · 1TB · 16\" OLED 240Hz",
    "estado": "disponible",
-   "precio": 15799900
+   "precio": 18419900
   },
   {
    "id": "lenovo-legion-ryzen-9-9955hx3d-rtx-5080-16gb-64gb-ddr5-2tb-16-oled-240hz",
@@ -2113,7 +2113,7 @@
    "marca": "Logitech",
    "nombre": "Mouse Inalámbrico G305",
    "estado": "disponible",
-   "precio": 169900
+   "precio": 149900
   },
   {
    "id": "logitech-mouse-inalambrico-g305-azul",
@@ -2177,7 +2177,7 @@
    "marca": "Logitech",
    "nombre": "Volante Timón G29 PS3 PS4 PS5 PC",
    "estado": "disponible",
-   "precio": 1009900
+   "precio": 1089900
   },
   {
    "id": "logitech-volante-g920-xbox-pc",
@@ -2193,7 +2193,7 @@
    "marca": "Logitech",
    "nombre": "Volante Timón G923 Trueforce PS4 PS5 PC",
    "estado": "disponible",
-   "precio": 1199900
+   "precio": 1229900
   },
   {
    "id": "logitech-volante-timon-g923-trueforce-xbox-pc",
@@ -2689,7 +2689,7 @@
    "marca": "LG",
    "nombre": "Monitor 27U411B-B 27\" Full HD 144 Hz",
    "estado": "disponible",
-   "precio": 499900
+   "precio": 479900
   },
   {
    "id": "lg-monitor-22-22mr410",
@@ -4177,7 +4177,7 @@
    "marca": "TP-Link",
    "nombre": "Cámara IP Tapo C200",
    "estado": "disponible",
-   "precio": 92900
+   "precio": 96900
   },
   {
    "id": "tp-link-camara-ip-tapo-c210-2k",
@@ -4185,7 +4185,7 @@
    "marca": "TP-Link",
    "nombre": "Cámara IP Tapo C210 2K",
    "estado": "disponible",
-   "precio": 99900
+   "precio": 92900
   },
   {
    "id": "tp-link-camara-wi-fi-tapo-c220-2k-qhd-4mp",
@@ -4217,7 +4217,7 @@
    "marca": "TP-Link",
    "nombre": "Cámara IP Tapo C310 Exterior 2K",
    "estado": "disponible",
-   "precio": 159900
+   "precio": 149900
   },
   {
    "id": "tp-link-camara-ip-tapo-c500-exterior-360",
@@ -4225,7 +4225,7 @@
    "marca": "TP-Link",
    "nombre": "Cámara IP Tapo C500 Exterior 360°",
    "estado": "disponible",
-   "precio": 189900
+   "precio": 179900
   },
   {
    "id": "tp-link-camara-ip-tapo-c320s-exterior",
@@ -4401,7 +4401,7 @@
    "marca": "TP-Link",
    "nombre": "Router Wi-Fi Malla Deco E4 3 Pack",
    "estado": "disponible",
-   "precio": 409900
+   "precio": 379900
   },
   {
    "id": "tp-link-access-point-punto-de-acceso-ac1200-eap-225-outdoor-gigabit-dual-band-5-ghz",
