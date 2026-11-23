@@ -23,6 +23,7 @@ export default function AdminPanel() {
       <p className="admin__warn">Los cambios que guardes aquí se publican de una vez para todos los clientes.</p>
       <div className="admin__top">
         <Link className="btn btn--ghost btn--sm" href="/">Volver a la tienda</Link>
+        <Link className="btn btn--ghost btn--sm" href="/admin/remision">Remisiones</Link>
         <button className="btn btn--ghost btn--sm" id="logout" hidden>Cerrar sesión</button>
       </div>
 

@@ -623,3 +623,80 @@ body:has(.sum__bar.is-on) .wa-flot{bottom:84px}
 /* secciones en azul noche */
 .build,.foot{background:var(--noche);border-top-color:rgba(46,140,255,.18)}
 .build .step,.build .step:last-child{border-color:rgba(46,140,255,.16)}
+
+/* ============================================================
+   REMISIONES (/admin/remision) — formulario + documento (.rd)
+   ============================================================ */
+.rem__logo{display:none}
+.rem__lock{display:none;margin:18px 0;font-size:15px}
+.rem.is-locked .rem__lock{display:block}
+.rem__lock a{text-decoration:underline}
+.rem__items{grid-column:1/-1;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.rem__items li{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(0,1.3fr) minmax(0,1fr) 70px minmax(0,1.1fr) auto;gap:10px;align-items:end;border-bottom:1px solid #eee;padding-bottom:12px}
+.rem__items li.cobro__vacio{display:block;color:#777;font-size:14px;border:0}
+.rem__items .w2{grid-column:auto}
+.rem__items label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#555;min-width:0}
+.rem__vista{margin:26px 0 10px}
+.rem__acc{display:flex;flex-wrap:wrap;gap:8px}
+.rem__ayuda{font-size:13px;color:#666;margin:10px 0 16px}
+.rem__buscar{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#555;margin-bottom:12px}
+.rem__buscar input{height:44px;border:1px solid #000;border-radius:999px;padding:0 18px;font-size:15px;outline:none}
+.rem .photos li{grid-template-columns:minmax(0,1fr) auto}
+@media (max-width:760px){
+  .rem__items li{grid-template-columns:1fr 1fr;background:#fafafa;padding:12px;border:1px solid #eee;border-radius:10px}
+  .rem__items li label:first-child{grid-column:1/-1}
+  .rem__items li .edp__del{grid-column:1/-1}
+}
+
+/* el documento: se ve como hoja carta en pantalla y es lo único que se imprime */
+.rd{--rd-azul:#2E8CFF;background:#fff;color:#111;max-width:816px;margin:0 auto;border:1px solid #ddd;font:13px/1.45 var(--sans, Inter, system-ui, sans-serif);-webkit-print-color-adjust:exact;print-color-adjust:exact;position:relative}
+.rd__top{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#000;color:#fff;padding:22px 28px}
+.rd__marca{display:flex;align-items:center;gap:14px}
+.rd__logo{display:block;width:54px;height:auto;color:#fff}
+.rd__marca strong{display:block;font-size:20px;letter-spacing:.18em;font-weight:600}
+.rd__marca span{display:block;font-size:11px;color:#9a9a9a;letter-spacing:.06em}
+.rd__tit{text-align:right}
+.rd__tit strong{display:block;font-size:22px;letter-spacing:.14em;font-weight:300}
+.rd__tit span{display:block;font-size:12px;color:var(--rd-azul);letter-spacing:.08em;margin-top:4px}
+.rd__anul{position:absolute;top:40%;left:0;right:0;text-align:center;font-size:72px;font-weight:700;letter-spacing:.2em;color:rgba(200,0,30,.18);transform:rotate(-18deg);pointer-events:none}
+.rd__datos{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:22px 28px 6px}
+.rd h4{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--rd-azul);margin:0 0 8px;font-weight:600}
+.rd__datos p{margin:0 0 2px}
+.rd__tabla{width:calc(100% - 56px);margin:16px 28px 0;border-collapse:collapse}
+.rd__tabla th{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;text-align:left;background:#f2f2f2;padding:9px 8px;border-bottom:2px solid #000}
+.rd__tabla td{padding:10px 8px;border-bottom:1px solid #e5e5e5;vertical-align:top}
+.rd__tabla td small{display:block;color:#666;font-size:11.5px;margin-top:2px}
+.rd__n{color:#888;width:22px}.rd__c{text-align:center;white-space:nowrap}.rd__r{text-align:right;white-space:nowrap}
+.rd__tot{margin:12px 28px 0 auto;width:280px;max-width:calc(100% - 56px)}
+.rd__tot p{display:flex;justify-content:space-between;margin:0;padding:6px 0;border-bottom:1px solid #eee}
+.rd__total{font-weight:700;font-size:15px;border-bottom:0!important;border-top:2px solid #000;padding-top:9px!important}
+.rd__cond{padding:18px 28px 0}
+.rd__cond ul{margin:0;padding-left:18px;color:#444;font-size:11.5px}
+.rd__cond li{margin-bottom:3px}
+.rd__firmas{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:44px 28px 10px}
+.rd__linea{display:block;border-bottom:1px solid #000;height:36px}
+.rd__firmas p{font-size:11px;color:#555;margin:6px 0 0}
+.rd__pie{border-top:3px solid var(--rd-azul);margin-top:18px;padding:12px 28px 16px;font-size:10.5px;color:#666;text-align:center}
+@media (max-width:640px){
+  .rd{font-size:12px}
+  .rd__top{padding:16px}.rd__datos,.rd__cond{padding-left:16px;padding-right:16px}
+  .rd__datos{grid-template-columns:1fr;gap:12px}
+  .rd__tabla{width:calc(100% - 32px);margin:12px 16px 0}
+  .rd__tabla th:nth-child(1),.rd__tabla td:nth-child(1){display:none}
+  .rd__tot{margin-right:16px}.rd__firmas{padding:32px 16px 8px;gap:20px}
+  .rd__marca span{display:none}.rd__marca strong{font-size:15px;letter-spacing:.12em}.rd__logo{width:40px}
+  .rd__tit strong{font-size:15px;letter-spacing:.1em}
+  .rd__tabla th,.rd__tabla td{padding:8px 4px}
+  .rd__tabla th:nth-child(5),.rd__tabla td:nth-child(5){display:none}
+}
+#remDoc{overflow-x:auto}
+#remPrint{display:none}
+@media print{
+  @page{size:letter;margin:10mm}
+  body.imprime-remision>*:not(#remPrint){display:none!important}
+  body.imprime-remision #remPrint{display:block}
+  #remPrint .rd{max-width:none;border:0;font-size:12.5px}
+  #remPrint .rd__datos{grid-template-columns:1fr 1fr}
+  #remPrint .rd__tabla th,#remPrint .rd__tabla td{display:table-cell;padding:10px 8px}
+  #remPrint .rd__marca span{display:block}
+}
