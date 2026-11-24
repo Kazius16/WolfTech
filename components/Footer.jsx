@@ -58,6 +58,7 @@ export default function Footer({ fecha, categorias = ORDEN_CATEGORIAS }) {
         <span>Envigado, Antioquia · Precios de contado sujetos a confirmación. Lista actualizada el {fecha}.</span>
         <Link href="/admin" rel="nofollow">Administrar catálogo</Link>
       </div>
+      <p className="foot__credito">Página hecha con ☕ por <a href="https://tintostudio.vercel.app/" target="_blank" rel="noopener">Tinto Studio</a></p>
     </footer>
   );
 }
