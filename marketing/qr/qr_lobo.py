@@ -1,11 +1,12 @@
 """QR con forma de lobo: el logo oficial (marketing/videos/logo.svg) se convierte en
 puntos y pistas del mismo estilo del QR, y el código real va en la cara del lobo.
-Uso: python3 qr_lobo.py [url]  → qr-lobo(.svg/.png transparente), qr-lobo-blanco.png y qr-lobo-negro(.svg/.png)"""
+Uso: python3 qr_lobo.py [url] [prefijo]  → qr-lobo(.svg/.png transparente), qr-lobo-blanco.png y qr-lobo-negro(.svg/.png)"""
 import sys, io, segno, cairosvg, numpy as np
 from PIL import Image
 from pathlib import Path
 
 URL = sys.argv[1] if len(sys.argv) > 1 else 'https://linktr.ee/wolftech.co'
+NOMBRE = sys.argv[2] if len(sys.argv) > 2 else 'qr-lobo'          # prefijo de los archivos
 AZUL, TINTA = '#2E8CFF', '#0A0A0A'
 LOGO = Path(__file__).resolve().parent.parent / 'videos' / 'logo.svg'
 LW, LH = 850, 812                          # viewBox del logo
@@ -80,9 +81,9 @@ def svg(fondo, color_lobo):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">{bg}'
             f'<g fill="{color_lobo}">{lobo}</g>{panel}<g fill="{TINTA}">{codigo}</g>{"".join(ojos)}</svg>')
 
-Path('qr-lobo.svg').write_text(svg(None, TINTA))
-cairosvg.svg2png(bytestring=svg(None, TINTA).encode(), write_to='qr-lobo.png', output_width=2400)
-cairosvg.svg2png(bytestring=svg('#fff', TINTA).encode(), write_to='qr-lobo-blanco.png', output_width=2400)
-Path('qr-lobo-negro.svg').write_text(svg('#000', '#fff'))
-cairosvg.svg2png(bytestring=svg('#000', '#fff').encode(), write_to='qr-lobo-negro.png', output_width=2400)
+Path(f'{NOMBRE}.svg').write_text(svg(None, TINTA))
+cairosvg.svg2png(bytestring=svg(None, TINTA).encode(), write_to=f'{NOMBRE}.png', output_width=2400)
+cairosvg.svg2png(bytestring=svg('#fff', TINTA).encode(), write_to=f'{NOMBRE}-blanco.png', output_width=2400)
+Path(f'{NOMBRE}-negro.svg').write_text(svg('#000', '#fff'))
+cairosvg.svg2png(bytestring=svg('#000', '#fff').encode(), write_to=f'{NOMBRE}-negro.png', output_width=2400)
 print('QR', N, 'x', N, '· cuadrícula', cols, 'x', rows, '·', URL)
