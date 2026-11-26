@@ -250,7 +250,7 @@ a{color:inherit}
 .opt__p{font:300 18px/1 var(--display);letter-spacing:-.02em;white-space:nowrap}
 .step__note{color:var(--mute);font-size:13px;margin-top:10px}
 .step__skip{font-size:14px;text-decoration:underline;text-underline-offset:4px;margin-top:10px;color:var(--mute)}
-.sum{position:sticky;top:90px;border:1px solid var(--line-2);padding:28px}
+.sum{border:1px solid var(--line-2);padding:28px}
 .sum h3{font:300 26px/1 var(--display);letter-spacing:-.03em;margin-bottom:18px}
 .sum__list{list-style:none;margin-bottom:18px}
 .sum__list li{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -269,7 +269,6 @@ a{color:inherit}
 @media (max-width:900px){
   .build__grid{grid-template-columns:1fr}
   .step__body{padding-left:0}
-  .sum{position:static}
   .sum__bar{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:30;background:#fff;color:#000;border-radius:999px;height:58px;padding:0 8px 0 22px;align-items:center;justify-content:space-between;transform:translateY(140%);transition:transform .4s var(--ease)}
   .sum__bar.is-on{transform:none}
   .sum__bar b{font:300 22px var(--display);letter-spacing:-.03em}
@@ -451,6 +450,125 @@ a{color:inherit}
 .imp__btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .imp__msg{padding:16px 0;color:#555}
 @media (max-width:760px){.diff{grid-template-columns:1fr}.photos li{grid-template-columns:56px minmax(0,1fr)}.photos__act{grid-column:2}}
+
+/* ============================================================
+   ARMADOR — PC EN 3D (components/PC3D.jsx). Solo CSS 3D.
+   Escritorio: arriba del resumen, en la columna pegada.
+   Celular: pegada arriba de los pasos, pequeña y plegable.
+   ============================================================ */
+.build__lado{position:sticky;top:90px;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;display:flex;flex-direction:column;gap:16px}
+.p3d{--acento:#2E8CFF;border:1px solid var(--line-2);background:#000;display:flex;flex-direction:column;flex:none}
+.p3d__barra{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.p3d__titulo{font:300 18px/1 var(--display);letter-spacing:-.02em}
+.p3d__titulo .num{font:400 12px/1 var(--mono);color:var(--mute);margin-left:8px}
+.p3d__plegar{font-size:13px;color:var(--mute);text-decoration:underline;text-underline-offset:4px}
+.p3d__plegar:hover{color:#fff}
+.p3d.is-plegado .p3d__escena,.p3d.is-plegado .p3d__info,.p3d.is-plegado .p3d__ctrl{display:none}
+.p3d.is-plegado .p3d__barra{border-bottom:0}
+.p3d__escena{position:relative;height:clamp(280px,40vh,380px);overflow:hidden;perspective:1500px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.p3d__escena:active{cursor:grabbing}
+.p3d.is-fija .p3d__escena{cursor:default}
+.p3d__mundo{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;transform:scale3d(.5,.5,.5) rotateX(-14deg) rotateY(-28deg)}
+.p3d__mundo div{transform-style:preserve-3d}
+.p3d__info{min-height:40px;padding:10px 16px;font-size:13px;line-height:1.4;color:var(--mute);border-top:1px solid var(--line)}
+.p3d__info b{color:#fff;font-weight:500}
+.p3d__ctrl{display:flex;gap:6px;padding:0 16px 14px;flex-wrap:wrap}
+.p3d__ctrl button{height:32px;padding:0 13px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;color:var(--mute);transition:border-color .2s,color .2s,background .2s}
+.p3d__ctrl button:hover{border-color:#fff;color:#fff}
+.p3d__ctrl button[aria-pressed=true]{background:#fff;border-color:#fff;color:#000}
+.p3d__sep{margin-left:auto}
+.p3d.is-fija .p3d__ctrl{display:none}
+
+/* primitivas: caja de 6 caras y plano suelto */
+.c3{position:absolute;left:0;top:0}
+.c3__f{position:absolute;left:0;top:0;background-color:var(--c,#141414);border:1px solid var(--b,#262626);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.c3__t{box-shadow:inset 0 0 0 999px rgba(255,255,255,.05)}
+.c3__r,.c3__l{box-shadow:inset 0 0 0 999px rgba(0,0,0,.22)}
+.c3__u{box-shadow:inset 0 0 0 999px rgba(0,0,0,.4)}
+.pl3{position:absolute;left:0;top:0}
+
+/* grupos de piezas: separar, resaltar y entrar */
+.p3-g{position:absolute;left:0;top:0;cursor:pointer;transition:transform .6s var(--ease)}
+.p3-in,.p3-in2{position:absolute;left:0;top:0}
+.p3-in.is-entra{animation:p3-entra .6s var(--ease) both}
+.p3-in.is-entra .c3__f{animation:p3-brillo 1.2s ease-out}
+@keyframes p3-entra{from{transform:translate3d(0,-36px,170px)}to{transform:none}}
+@keyframes p3-brillo{0%,40%{border-color:var(--acento)}}
+.p3-g.is-foco .c3__f{border-color:var(--acento)}
+.p3d.is-separada .p3-tubo{display:none}
+
+/* contornos de lo que falta */
+.p3-g.is-fantasma .pl3,.p3-g.is-fantasma .c3__f{background:transparent;border:1px dashed #444;box-shadow:none;outline:0}
+.p3-g.is-fantasma.is-abierto .pl3,.p3-g.is-fantasma.is-abierto .c3__f,.p3-g.is-fantasma.is-foco .pl3,.p3-g.is-fantasma.is-foco .c3__f{border-color:var(--acento)}
+.p3-et{position:absolute;inset:0;display:grid;place-items:center;font:400 11px/1.1 var(--mono);color:#6a6a6a;text-align:center;white-space:nowrap}
+.p3-g.is-abierto .p3-et,.p3-g.is-foco .p3-et{color:var(--acento)}
+
+/* chasis */
+.p3-chasis{--c:#121212;--b:#242424}
+.p3-malla{background:radial-gradient(circle,#2b2b2b 1.1px,transparent 1.5px) 0 0/6px 6px;border:7px solid #121212;outline:1px solid #242424}
+.is-blanco .p3-chasis{--c:#e6e6e6;--b:#cfcfcf}
+.is-blanco .p3-malla{background-image:radial-gradient(circle,#cfcfcf 1.1px,transparent 1.5px);border-color:#e6e6e6;outline-color:#cfcfcf}
+.p3-luz{--c:var(--acento);--b:var(--acento)}
+.p3-pasacables{position:absolute;top:30%;width:8px;height:30%;border-radius:4px;background:#050505;border:1px solid #222}
+.p3-io-trasero{position:absolute;left:30%;top:6%;width:40%;height:22%;background:repeating-linear-gradient(90deg,#1e1e1e 0 3px,#0a0a0a 3px 6px)}
+.p3-suelo{background:radial-gradient(closest-side,rgba(255,255,255,.07),transparent);pointer-events:none}
+
+/* board y lo que va en ella */
+.p3-pcb{--c:#131618;--b:#2a2f33}
+.p3-pcb .c3__f{background-image:repeating-linear-gradient(0deg,transparent 0 13px,rgba(255,255,255,.025) 13px 14px),repeating-linear-gradient(90deg,transparent 0 13px,rgba(255,255,255,.025) 13px 14px)}
+.p3-serig{position:absolute;left:10px;bottom:8px;font:400 9px/1 var(--mono);color:#7a7a7a;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.p3-oscuro{--c:#1a1a1a;--b:#2c2c2c}
+.p3-vrm{--c:#222;--b:#333}
+.p3-vrm .c3__f{background-image:repeating-linear-gradient(90deg,transparent 0 3px,rgba(0,0,0,.35) 3px 5px)}
+.p3-socket{--c:#2a2a2a;--b:#3a3a3a}
+.p3-ranura{--c:#191919;--b:#2b2b2b}
+.p3-cpu{--c:#b8b8b8;--b:#d0d0d0}
+.p3-marca{position:absolute;inset:0;display:grid;place-items:center;font:500 7px/1 var(--text);color:#333;text-transform:uppercase;letter-spacing:.08em}
+.p3-m2{--c:#151515;--b:#2c2c2c}
+.p3-sticker{position:absolute;inset:3px 8px;display:grid;place-items:center;background:#e9e9e9;color:#111;font:500 8px/1 var(--mono);white-space:nowrap}
+.c3__t .p3-sticker{transform:rotate(180deg)} /* la cara de arriba queda girada: el texto se endereza */
+.p3-ram{--c:#1c1c1c;--b:#323232}
+.p3-ram.is-rgb .c3__t{background-color:var(--acento)}
+.p3-vertical{position:absolute;inset:0;display:grid;place-items:center;writing-mode:vertical-rl;font:400 8px/1 var(--mono);color:#777;letter-spacing:.1em}
+
+/* tarjeta de video y fuente */
+.p3-gpu{--c:#161616;--b:#2e2e2e}
+.p3-gpu__t,.p3-psu__t{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 14px;gap:3px;white-space:nowrap}
+.p3-gpu__t b{font:300 15px/1 var(--display);letter-spacing:-.01em;color:#f2f2f2}
+.p3-gpu__t span,.p3-psu__t span{font:400 9px/1 var(--mono);color:#7a7a7a}
+.p3-psu{--c:#121212;--b:#2a2a2a}
+.p3-psu__t b{font:200 26px/1 var(--display);letter-spacing:-.03em;color:#fff}
+
+/* ventiladores, bomba, aletas y mangueras */
+.p3-vents{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-evenly}
+.p3-fan{display:block;flex:none;width:72%;max-width:96px;aspect-ratio:1;border-radius:50%;border:2px solid #333;background:radial-gradient(circle,#2a2a2a 0 16%,transparent 17%),repeating-conic-gradient(#1d1d1d 0 22deg,#0e0e0e 22deg 45deg)}
+.p3-fan.is-rgb{border-color:var(--acento)}
+.c3__r .p3-vents,.c3__l .p3-vents{flex-direction:column}
+.c3__r .p3-fan,.c3__l .p3-fan{width:auto;height:min(30%,96px)}
+.c3__r .p3-fan:only-child,.c3__l .p3-fan:only-child{height:86%}
+.p3-bomba{position:absolute;inset:12%;border-radius:50%;background:#0c0c0c;border:2px solid #333}
+.p3-bomba.is-rgb{border-color:var(--acento)}
+.p3-aletas{--c:#1b1b1b;--b:#2e2e2e}
+.p3-aletas .c3__f{background-image:repeating-linear-gradient(0deg,#2b2b2b 0 1px,transparent 1px 4px)}
+.p3-aletas--h .c3__f{background-image:repeating-linear-gradient(90deg,#2b2b2b 0 1px,transparent 1px 4px)}
+.is-blanco .p3-oscuro,.is-blanco .p3-aletas{--c:#e2e2e2;--b:#c9c9c9}
+.is-blanco .p3-fan{border-color:#bbb;background:radial-gradient(circle,#ddd 0 16%,transparent 17%),repeating-conic-gradient(#d8d8d8 0 22deg,#c4c4c4 22deg 45deg)}
+.is-blanco .p3-fan.is-rgb,.is-blanco .p3-bomba.is-rgb{border-color:var(--acento)}
+.p3-tubo{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:4px}
+.is-blanco .p3-tubo{background:#d9d9d9;border-color:#bbb}
+
+@media (max-width:900px){
+  .build__lado{display:contents}
+  .p3d{order:-1;position:sticky;top:72px;z-index:5}
+  .sum{order:1}
+  .p3d__barra{padding:8px 14px}
+  .p3d__titulo{font-size:16px}
+  .p3d__escena{height:clamp(140px,22vh,190px)}
+  .p3d__info{display:none}
+  .p3d.is-fija .p3d__info{display:block;min-height:0;padding:6px 14px;font-size:12px}
+  .p3d__ctrl{padding:0 14px 10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .p3d__ctrl button{flex:none;height:28px;padding:0 11px;font-size:12.5px}
+}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}

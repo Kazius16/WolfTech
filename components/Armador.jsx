@@ -9,6 +9,7 @@ import { pesos, store } from '@/lib/util';
 import { waLink } from '@/lib/whatsapp';
 import { useTienda } from './Tienda';
 import { IconoChat } from './Iconos';
+import PC3D from './PC3D';
 
 export const PASOS = [
   { k: 'cpu', t: 'Procesador', cat: 'Procesadores' },
@@ -97,11 +98,20 @@ export default function Armador() {
     const i = PASOS.findIndex((p) => p.k === k), sig = PASOS.slice(i + 1).find((p) => !nuevo[p.k]);
     setAbierto(sig ? sig.k : null);
     guardar(nuevo);
-    requestAnimationFrame(() => {
-      const head = document.querySelector(`[data-step="${sig ? sig.k : k}"]`);
-      if (head && head.getBoundingClientRect().top < 60) head.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    });
+    requestAnimationFrame(() => verPaso(sig ? sig.k : k));
   };
+  /* Lo que tapa arriba: la barra fija y, en celular, la vista 3D pegada debajo */
+  const tope = () => (movil && document.querySelector('.p3d')?.getBoundingClientRect().bottom) || 60;
+  const verPaso = (k, siempre = false) => {
+    const head = document.querySelector(`[data-step="${k}"]`);
+    if (!head) return;
+    const t = tope(), y = head.getBoundingClientRect().top;
+    if (y < t || (siempre && y > innerHeight - 120)) {
+      scrollTo({ top: scrollY + y - t - 8, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+  };
+  /* Tocar una pieza en el modelo 3D abre su paso */
+  const abrirPaso = (k) => { setAbierto(k); requestAnimationFrame(() => verPaso(k, true)); };
   const limpiar = (k) => {
     const nuevo = { ...PC }; delete nuevo[k];
     const i = PASOS.findIndex((p) => p.k === k);
@@ -159,6 +169,8 @@ export default function Armador() {
             );
           })}
         </div>
+        <div className="build__lado">
+        <PC3D pasos={PASOS} piezas={Object.fromEntries(PASOS.map((p) => [p.k, R.sel(p.k)]))} abierto={abierto} alAbrir={abrirPaso} />
         <aside className="sum" id="sum" aria-label="Resumen de tu PC">
           <h3>Tu PC</h3>
           {items.length ? (
@@ -176,6 +188,7 @@ export default function Armador() {
           </button>
           {items.length && !listo ? <p className="step__note">Faltan piezas obligatorias o hay algo por corregir. Igual puedes enviarlo y te asesoramos.</p> : null}
         </aside>
+        </div>
       </div>
       <div className={'sum__bar' + (items.length && movil && visible ? ' is-on' : '')}>
         <span>Tu PC <b className="num">{pesos(total)}</b></span>
