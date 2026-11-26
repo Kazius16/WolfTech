@@ -457,8 +457,8 @@ a{color:inherit}
    Celular: pegada arriba de los pasos, pequeña y plegable.
    ============================================================ */
 .build__lado{position:sticky;top:90px;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;display:flex;flex-direction:column;gap:16px}
-.p3d{--acento:#2E8CFF;border:1px solid var(--line-2);background:#000;display:flex;flex-direction:column;flex:none}
-.p3d__barra{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.p3d{--acento:var(--azul,#2E8CFF);border:1px solid var(--line-2);background:var(--noche,#000);display:flex;flex-direction:column;flex:none}
+.p3d__barra{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(46,140,255,.16)}
 .p3d__titulo{font:300 18px/1 var(--display);letter-spacing:-.02em}
 .p3d__titulo .num{font:400 12px/1 var(--mono);color:var(--mute);margin-left:8px}
 .p3d__plegar{font-size:13px;color:var(--mute);text-decoration:underline;text-underline-offset:4px}
@@ -470,7 +470,7 @@ a{color:inherit}
 .p3d.is-fija .p3d__escena{cursor:default}
 .p3d__mundo{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;transform:scale3d(.5,.5,.5) rotateX(-14deg) rotateY(-28deg)}
 .p3d__mundo div{transform-style:preserve-3d}
-.p3d__info{min-height:40px;padding:10px 16px;font-size:13px;line-height:1.4;color:var(--mute);border-top:1px solid var(--line)}
+.p3d__info{min-height:40px;padding:10px 16px;font-size:13px;line-height:1.4;color:var(--mute);border-top:1px solid rgba(46,140,255,.16)}
 .p3d__info b{color:#fff;font-weight:500}
 .p3d__ctrl{display:flex;gap:6px;padding:0 16px 14px;flex-wrap:wrap}
 .p3d__ctrl button{height:32px;padding:0 13px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;color:var(--mute);transition:border-color .2s,color .2s,background .2s}
