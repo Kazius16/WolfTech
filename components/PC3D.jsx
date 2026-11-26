@@ -133,7 +133,8 @@ function Tubo({ a, b, r = 7 }) {
 const Vent = ({ n = 1, rgb, size }) => (
   <div className="p3-vents">{Array.from({ length: n }, (_, i) => <i key={i} className={`p3-fan${rgb ? ' is-rgb' : ''}`} style={size ? { width: size, height: size } : null} />)}</div>
 );
-const Etiqueta = ({ children }) => <span className="p3-et">{children}</span>;
+/* esquina: la etiqueta va arriba a la izquierda (la de la board, para no tapar las del SSD y la tarjeta) */
+const Etiqueta = ({ children, esquina }) => <span className={`p3-et${esquina ? ' p3-et--esquina' : ''}`}><b>{children}</b></span>;
 
 /* Pieza: grupo que se separa, se resalta y anima su entrada cuando cambia el producto.
    Va fuera del componente principal para que React no la vuelva a montar en cada render. */
@@ -213,7 +214,8 @@ export default function PC3D({ pasos, piezas, abierto, alAbrir }) {
     // escala según el tamaño del recuadro
     const ro = new ResizeObserver(([en]) => {
       const { width, height } = en.contentRect;
-      escala.current = Math.max(0.2, Math.min(width / 580, height / 580));
+      // 560 × 540 ≈ lo que ocupa el modelo en la vista 3/4: así llena el recuadro sin cortarse
+      escala.current = Math.max(0.2, Math.min(width / 560, height / 540));
       aplicarRef.current();
     });
     ro.observe(escena.current);
@@ -331,7 +333,7 @@ export default function PC3D({ pasos, piezas, abierto, alAbrir }) {
               {!itx ? <Caja c="p3-vrm" x={BX + bw - 48} y={BY + bh - 50} z={BZ + 3} w={36} h={36} d={6} /> : null}
             </Pieza>
           ) : (
-            <Pieza k="board" fantasma><Plano x={BX + bw / 2} y={BY + bh / 2} z={BZ} w={bw} h={bh}><Etiqueta>Board</Etiqueta></Plano></Pieza>
+            <Pieza k="board" fantasma><Plano x={BX + bw / 2} y={BY + bh / 2} z={BZ} w={bw} h={bh}><Etiqueta esquina>Board</Etiqueta></Plano></Pieza>
           )}
 
           {/* Procesador (y su disipador de fábrica, si lo trae) */}
