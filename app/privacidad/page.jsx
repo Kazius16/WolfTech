@@ -40,7 +40,16 @@ export default function Privacidad() {
         <li>Con la transportadora, solo lo necesario para la entrega (nombre, teléfono y dirección).</li>
         <li>Con el proveedor o el fabricante, cuando hay que tramitar una garantía.</li>
         <li>Con los servicios que usamos para operar: WhatsApp (Meta) para hablar contigo, y los servicios de alojamiento de esta página. Algunos de ellos guardan la información fuera de Colombia.</li>
+        <li>Con Meta (Facebook e Instagram), por medio de su píxel en esta página, para medir nuestros anuncios. Ver el punto siguiente.</li>
         <li>Con autoridades, cuando la ley lo exija.</li>
+      </ul>
+
+      <h2>Medición de anuncios (píxel de Meta)</h2>
+      <p>Esta página usa el píxel de Meta, una herramienta de Facebook e Instagram que usa cookies. Con él, Meta registra qué páginas visitas aquí, si abres WhatsApp desde la página y datos técnicos de tu navegador y dispositivo. Lo usamos solo para saber si nuestros anuncios funcionan y para mostrarlos a personas a las que les pueda interesar. Meta trata esos datos según su propia política de privacidad y puede guardarlos fuera de Colombia.</p>
+      <ul>
+        <li>No recibimos tu nombre ni tu número por el píxel, y nunca le enviamos el contenido de tus mensajes de WhatsApp.</li>
+        <li>No funciona en el panel de administración de la tienda.</li>
+        <li>Puedes bloquearlo borrando o bloqueando las cookies de tu navegador, o desde la configuración de anuncios de tu cuenta de Facebook o Instagram.</li>
       </ul>
 
       <h2>6. Tus derechos</h2>

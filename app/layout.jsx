@@ -7,6 +7,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Arranque from '@/components/Arranque';
 import WhatsAppFlotante from '@/components/WhatsAppFlotante';
+import PixelMeta from '@/components/PixelMeta';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono', display: 'swap' });
 
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }) {
           <Arranque />
           <WhatsAppFlotante />
         </Tienda>
+        <PixelMeta />
       </body>
     </html>
   );
